@@ -3,7 +3,7 @@
     <div class="modal-content">
       <div class="modal-header">
         <!-- 모달 창 헤더 -->
-        <img src="@/assets/coin-icon.png" alt="코인 아이콘" class="coin-icon" />
+        <img src="@/assets/coin-icon.svg" alt="코인 아이콘" class="coin-icon" />
         <h2>거래 내역을 입력하세요</h2>
         <p class="subtitle">지출 또는 수입 내역을 입력하는 곳이에요</p>
         <!-- 수입/지출 토글 스위치 -->
@@ -48,6 +48,7 @@
               />
             </label>
           </div>
+          <!-- 카테고리 선택 -->
           <div class="input-group">
             <label
               >카테고리 Category
