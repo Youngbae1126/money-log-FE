@@ -23,9 +23,10 @@
             <label
               >금액 amount
               <input
-                type="number"
-                v-model="amount"
+                type="text"
+                v-model="formattedAmount"
                 placeholder="금액을 입력하세요"
+                @input="handleAmountInput"
               />
             </label>
           </div>
@@ -86,6 +87,7 @@ export default {
   data() {
     return {
       amount: '',
+      formattedAmount: '',
       date: new Date().toISOString().split('T')[0],
       memo: '',
       category: '',
@@ -108,6 +110,22 @@ export default {
   methods: {
     closeModal() {
       this.$emit('close')
+    },
+    // 금액 입력 시 유효성 검사
+    handleAmountInput(event) {
+      // 숫자가 아닌 모든 문자 제거
+      const value = event.target.value.replace(/[^0-9]/g, '')
+
+      // 숫자만 있는 경우에만 처리
+      if (value) {
+        // 숫자로 변환하여 저장
+        this.amount = value
+        // 천 단위 쉼표 추가하여 표시
+        this.formattedAmount = Number(value).toLocaleString('ko-KR')
+      } else {
+        this.amount = ''
+        this.formattedAmount = ''
+      }
     },
     submitForm() {
       const formData = {
@@ -203,6 +221,17 @@ select {
   border-radius: 8px;
   font-size: 1rem;
   margin: 0.5rem 0;
+}
+
+/* 숫자 입력 화살표 제거 */
+input[type='number']::-webkit-inner-spin-button,
+input[type='number']::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+input[type='number'] {
+  -moz-appearance: textfield;
 }
 
 .button-group {

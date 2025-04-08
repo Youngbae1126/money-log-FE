@@ -10,7 +10,6 @@ defineProps({
 <template>
   <button class="floating-button" @click="onClick">
     <span class="plus-icon">+</span>
-    <span class="button-text">새로운 내역 추가</span>
   </button>
 </template>
 
@@ -36,6 +35,7 @@ defineProps({
 .floating-button:hover {
   background-color: #ffb300;
   transform: translateY(-2px);
+  padding: 2rem 3rem;
   box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
 }
 
