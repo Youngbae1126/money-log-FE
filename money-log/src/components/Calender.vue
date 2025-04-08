@@ -49,12 +49,7 @@ function isSameDate(a, b) {
 
 <template>
   <div class="Calender">
-    <VCalendar
-      borderless
-      expanded
-      :attributes="attributes"
-      class="calender bg-white"
-    >
+    <VCalendar borderless expanded :attributes="attributes" class="calender">
       <template #day-content="{ day }">
         <div>
           <div class="fw-semibold text-center">

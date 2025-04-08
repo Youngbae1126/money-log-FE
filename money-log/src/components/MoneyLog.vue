@@ -1,37 +1,57 @@
-<script setup></script>
+<script setup>
+import { useUserStore } from '@/stores/users'
+import { onMounted, ref } from 'vue'
+import axios from 'axios'
+import shopping from '@/assets/shopping.svg'
+import trophy from '@/assets/trophy.svg'
+import money from '@/assets/money.svg'
+
+const userStore = useUserStore()
+const API_URL = 'http://localhost:3000/log'
+const userLogData = ref([])
+
+// 유저 정보 가져오기
+onMounted(() => {
+  userStore.getUserInfo()
+  getUserLog()
+})
+
+async function getUserLog() {
+  try {
+    const response = await axios.get(API_URL)
+    userLogData.value = response.data
+  } catch (error) {
+    console.log(error)
+    throw error
+  }
+}
+</script>
 
 <template>
   <div class="money-log__container">
     <div class="ml__container-top">
-      <p class="ml__container-top__title">홍길동님의 머니로그</p>
-      홍길동님의 한 달 소비를 분석한 리포트에요!
+      <p class="ml__container-top__title">
+        {{ userStore.nickname }}님의 머니로그
+      </p>
+      {{ userStore.nickname }}님의 한 달 소비를 분석한 리포트에요!
     </div>
     <div class="ml__container-bottom">
       <ul>
-        <li>
+        <li v-for="log in userLogData.userLog" :key="log.id">
           <div class="ml-icon__box">
-            <img src="../assets/shopping.svg" alt="쇼핑" />
+            <img
+              :src="
+                log.icon === 'shopping'
+                  ? shopping
+                  : log.icon === 'trophy'
+                    ? trophy
+                    : money
+              "
+              :alt="log.icon"
+            />
             <div class="ml-icon__box__text">
-              <p class="icon__box__title">쇼핑왕</p>
-              이번 한 달 동안 쇼핑에 가장 많이 소비했어요
-            </div>
-          </div>
-        </li>
-        <li>
-          <div class="ml-icon__box">
-            <img src="../assets/trophy.svg" alt="트로피" />
-            <div class="ml-icon__box__text">
-              <p class="icon__box__title">출석왕</p>
-              이번 한 달 동안 쇼핑에 가장 많이 소비했어요
-            </div>
-          </div>
-        </li>
-        <li>
-          <div class="ml-icon__box">
-            <img src="../assets/money.svg" alt="돈" />
-            <div class="ml-icon__box__text">
-              <p class="icon__box__title">소비왕</p>
-              이번 한 달 동안 쇼핑에 가장 많이 소비했어요
+              <p class="icon__box__title">{{ log.title }}</p>
+              {{ log.description }}
             </div>
           </div>
         </li>

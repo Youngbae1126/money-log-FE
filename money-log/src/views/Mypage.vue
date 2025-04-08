@@ -1,6 +1,21 @@
 <!-- eslint-disable vue/multi-word-component-names -->
 <script setup>
 import MoneyLog from '@/components/MoneyLog.vue'
+import { useGoalStore } from '@/stores/goal'
+import { useTransactionStore } from '@/stores/transactionStore'
+import { useUserStore } from '@/stores/users'
+import { onMounted } from 'vue'
+
+const userStore = useUserStore()
+const goalStore = useGoalStore()
+const transactionStore = useTransactionStore()
+
+// 유저, 목표 정보 가져오기
+onMounted(() => {
+  userStore.getUserInfo()
+  goalStore.getGoalInfo()
+  transactionStore.getTransactionInfo()
+})
 </script>
 
 <template>
@@ -15,7 +30,7 @@ import MoneyLog from '@/components/MoneyLog.vue'
         <div class="top-container-title">
           <div class="top-container-title__text">
             <p>쇼핑에 살고 죽는 쇼핑왕,</p>
-            <p>홍길동님!</p>
+            <p>{{ userStore.nickname }}님!</p>
           </div>
           <img
             src="../assets/profile-icon.svg"
@@ -31,7 +46,8 @@ import MoneyLog from '@/components/MoneyLog.vue'
           <p class="goal__container-title">목표 금액을 설정하세요</p>
           이번 달의 소비 목표 금액을 설정해보세요
           <p class="current-goal__text">
-            현재 목표 금액&nbsp; :&nbsp; 100,000원
+            현재 목표 금액&nbsp; :&nbsp;
+            {{ goalStore.targetExpense.toLocaleString() }}&nbsp;원
           </p>
           <div class="goal__input-box">
             ￦
