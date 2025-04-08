@@ -1,49 +1,52 @@
+<script setup>
+import { ref, computed, onMounted } from 'vue'
+import axios from 'axios'
+
+// 날짜 → 'YYYY-MM'
+const now = new Date()
+const currentMonth = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}`
+
+// 상태값
+const goalAmount = ref(0)
+const currentSpending = ref(0)
+
+// 지출 비율 계산
+const percentageUsed = computed(() => {
+  if (goalAmount.value === 0) return 0
+  const percent = (currentSpending.value / goalAmount.value) * 100
+  return percent > 100 ? 100 : Math.floor(percent)
+})
+
+// 데이터 로딩
+onMounted(() => {
+  axios
+    .get('http://localhost:3001/goal')
+    .then(response => {
+      const thisMonthGoal = response.data.find(
+        goal => goal.month === currentMonth,
+      )
+      if (thisMonthGoal) {
+        goalAmount.value = thisMonthGoal.targetExpense
+        currentSpending.value = thisMonthGoal.currentExpense
+      }
+    })
+    .catch(error => {
+      console.error('데이터 불러오기 실패:', error)
+    })
+})
+</script>
+
 <template>
-  <div class="p-6 w-[400px] border rounded-xl shadow-md space-y-4">
-    <h2 class="text-lg font-bold">목표 금액까지는, 이만큼</h2>
-
-    <!-- 퍼센트 진행 바 -->
-    <div class="w-full bg-gray-200 rounded-full h-5 overflow-hidden">
-      <div
-        class="bg-red-400 h-full transition-all duration-300"
-        :style="{ width: percentageUsed + '%' }"
-      ></div>
-    </div>
-
-    <!-- 텍스트 정보 -->
-    <div class="text-sm space-y-1">
-      <p>
-        목표 금액: <strong>{{ goalAmount.toLocaleString() }}</strong> 원
-      </p>
-      <p>
-        현재 소비 금액:
-        <strong>{{ currentSpending.toLocaleString() }}</strong> 원
-      </p>
-      <!--얘를 원형 차트로 만들어야 하는데 어려움.. -->
-      <p>
-        사용률: <strong>{{ percentageUsed }}%</strong>
-      </p>
-    </div>
+  <div class="GoalTracker">
+    <p>목표 금액: {{ goalAmount.toLocaleString() }}원</p>
+    <p>현재 지출: {{ currentSpending.toLocaleString() }}원</p>
+    <p>사용 비율: {{ percentageUsed }}%</p>
   </div>
 </template>
 
-<script>
-export default {
-  name: 'GoalTracker',
-  data() {
-    return {
-      // 임시 데이터 (나중에 JSON 서버로 대체 예정)
-      goalAmount: 1000000, // 목표 100만원
-      currentSpending: 420000, // 현재 소비 42만원
-    }
-  },
-  computed: {
-    percentageUsed() {
-      const percent = (this.currentSpending / this.goalAmount) * 100
-      return percent > 100 ? 100 : Math.floor(percent)
-    },
-  },
+<style scoped>
+.GoalTracker {
+  font-family: sans-serif;
+  padding: 1rem;
 }
-</script>
-
-<style scoped></style>
+</style>

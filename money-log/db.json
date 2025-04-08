@@ -17,16 +17,88 @@
       "type": "expense",
       "category": "식비",
       "content": "점심",
-      "date": "2025-04-01",
-      "amount": 10000
+      "date": "2025-04-04",
+      "amount": 8900
     },
     {
       "id": 2,
       "type": "income",
       "category": "용돈",
-      "content": "부모님",
-      "date": "2025-04-01",
+      "content": "할머니",
+      "date": "2025-05-15",
       "amount": 50000
+    },
+    {
+      "id": 3,
+      "type": "expense",
+      "category": "교통",
+      "content": "버스비",
+      "date": "2025-04-21",
+      "amount": 1200
+    },
+    {
+      "id": 4,
+      "type": "income",
+      "category": "알바",
+      "content": "카페 알바",
+      "date": "2025-05-03",
+      "amount": 30000
+    },
+    {
+      "id": 5,
+      "type": "expense",
+      "category": "문화생활",
+      "content": "영화",
+      "date": "2025-04-30",
+      "amount": 12000
+    },
+    {
+      "id": 6,
+      "type": "income",
+      "category": "용돈",
+      "content": "부모님",
+      "date": "2025-04-10",
+      "amount": 70000
+    },
+    {
+      "id": 7,
+      "type": "expense",
+      "category": "간식",
+      "content": "편의점",
+      "date": "2025-05-07",
+      "amount": 4300
+    },
+    {
+      "id": 8,
+      "type": "expense",
+      "category": "쇼핑",
+      "content": "옷",
+      "date": "2025-05-24",
+      "amount": 45000
+    },
+    {
+      "id": 9,
+      "type": "income",
+      "category": "환급",
+      "content": "포인트 환급",
+      "date": "2025-04-16",
+      "amount": 20000
+    },
+    {
+      "id": 10,
+      "type": "expense",
+      "category": "식비",
+      "content": "저녁",
+      "date": "2025-04-27",
+      "amount": 15000
+    },
+    {
+      "id": 11,
+      "type": "income",
+      "category": "용돈",
+      "content": "부모님",
+      "date": "2025-04-04",
+      "amount": 100000
     }
   ],
   "theme": "light"
