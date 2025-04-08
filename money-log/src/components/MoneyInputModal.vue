@@ -3,7 +3,7 @@
     <div class="modal-content">
       <div class="modal-header">
         <!-- 모달 창 헤더 -->
-        <img src="@/assets/coin-icon.png" alt="코인 아이콘" class="coin-icon" />
+        <img src="@/assets/coin-icon.svg" alt="코인 아이콘" class="coin-icon" />
         <h2>거래 내역을 입력하세요</h2>
         <p class="subtitle">지출 또는 수입 내역을 입력하는 곳이에요</p>
         <!-- 수입/지출 토글 스위치 -->
@@ -48,15 +48,18 @@
               />
             </label>
           </div>
+          <!-- 카테고리 선택 -->
           <div class="input-group">
             <label
               >카테고리 Category
               <select v-model="category">
-                <!-- 임시 옵션 데이터 -->
-                <option value="식비">식비</option>
-                <option value="교통">교통</option>
-                <option value="쇼핑">쇼핑</option>
-                <option value="기타">기타</option>
+                <option
+                  v-for="cat in categories"
+                  :key="cat.id"
+                  :value="cat.name"
+                >
+                  {{ cat.name }}
+                </option>
               </select>
             </label>
           </div>
@@ -85,9 +88,21 @@ export default {
       amount: '',
       date: new Date().toISOString().split('T')[0],
       memo: '',
-      category: '식비',
-      // 수입 지출 토글 스위치
+      category: '',
       isIncome: false,
+      categories: [],
+    }
+  },
+  async created() {
+    try {
+      const response = await fetch('/db.json')
+      const data = await response.json()
+      this.categories = data.categories
+      if (this.categories.length > 0) {
+        this.category = this.categories[0].name
+      }
+    } catch (error) {
+      console.error('카테고리 데이터를 불러오는데 실패했습니다:', error)
     }
   },
   methods: {
