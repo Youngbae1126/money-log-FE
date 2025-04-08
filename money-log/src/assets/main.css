@@ -21,6 +21,10 @@
   --brown-300: #b2a99b;
   --brown-500: #a08e6a;
   --brown-700: #4c4539;
+  --gray-200: #d9d9d9;
+  --gray-300: #cccccc;
+  --gray-400: #808080;
+  --gray-500: #262626;
 }
 
 * {
@@ -30,4 +34,8 @@
 a {
   text-decoration: none;
   color: inherit;
+}
+input {
+  border: none;
+  outline: none;
 }
