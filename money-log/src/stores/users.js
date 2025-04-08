@@ -17,7 +17,7 @@ export const useUserStore = defineStore('user', {
       try {
         const response = await axios.get(API_URL)
         this.nickname = response.data.nickname
-        this.id = response.id
+        this.id = response.data.id
       } catch (error) {
         alert(errorMessages)
         throw error
