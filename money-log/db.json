@@ -101,5 +101,82 @@
       "amount": 100000
     }
   ],
+  "categories": [
+    {
+      "id": 1,
+      "name": "식비",
+      "code": "eat"
+    },
+    {
+      "id": 2,
+      "name": "편의점 마트 잡화",
+      "code": "market"
+    },
+    {
+      "id": 3,
+      "name": "용돈",
+      "code": "money"
+    },
+    {
+      "id": 4,
+      "name": "쇼핑",
+      "code": "shopping"
+    },
+    {
+      "id": 5,
+      "name": "술 유흥",
+      "code": "drink"
+    },
+    {
+      "id": 6,
+      "name": "카페 간식",
+      "code": "cafe"
+    },
+    {
+      "id": 7,
+      "name": "의료 건강",
+      "code": "medical"
+    },
+    {
+      "id": 8,
+      "name": "취미 여가",
+      "code": "hobby"
+    },
+    {
+      "id": 9,
+      "name": "보험 세금",
+      "code": "tax"
+    },
+    {
+      "id": 10,
+      "name": "교통 자동차",
+      "code": "car"
+    },
+    {
+      "id": 11,
+      "name": "여행 숙박",
+      "code": "trip"
+    },
+    {
+      "id": 12,
+      "name": "교육",
+      "code": "edu"
+    },
+    {
+      "id": 13,
+      "name": "계좌 이체",
+      "code": "atm"
+    },
+    {
+      "id": 14,
+      "name": "미용",
+      "code": "beauty"
+    },
+    {
+      "id": 15,
+      "name": "경조사",
+      "code": "event"
+    }
+  ],
   "theme": "light"
 }
