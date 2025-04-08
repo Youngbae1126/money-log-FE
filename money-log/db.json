@@ -4,6 +4,28 @@
     "nickname": "영현",
     "icon": "👨‍💻"
   },
+  "log": [
+    {
+      "userId": 1,
+      "userLog": [
+        {
+          "title": "쇼핑왕",
+          "description": "이번 한 달 동안 쇼핑에 가장 많이 소비했어요",
+          "icon": "shopping"
+        },
+        {
+          "title": "출석왕",
+          "description": "이번 한 달 동안 매일 가계부를 작성했어요",
+          "icon": "trophy"
+        },
+        {
+          "title": "소비왕",
+          "description": "이번 한 달 동안 수입보다 소비 금액이 컸어요",
+          "icon": "money"
+        }
+      ]
+    }
+  ],
   "goal": [
     {
       "month": "2025-04",
