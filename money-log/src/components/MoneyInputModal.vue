@@ -52,11 +52,13 @@
             <label
               >카테고리 Category
               <select v-model="category">
-                <!-- 임시 옵션 데이터 -->
-                <option value="식비">식비</option>
-                <option value="교통">교통</option>
-                <option value="쇼핑">쇼핑</option>
-                <option value="기타">기타</option>
+                <option
+                  v-for="cat in categories"
+                  :key="cat.id"
+                  :value="cat.name"
+                >
+                  {{ cat.name }}
+                </option>
               </select>
             </label>
           </div>
@@ -85,9 +87,21 @@ export default {
       amount: '',
       date: new Date().toISOString().split('T')[0],
       memo: '',
-      category: '식비',
-      // 수입 지출 토글 스위치
+      category: '',
       isIncome: false,
+      categories: [],
+    }
+  },
+  async created() {
+    try {
+      const response = await fetch('/db.json')
+      const data = await response.json()
+      this.categories = data.categories
+      if (this.categories.length > 0) {
+        this.category = this.categories[0].name
+      }
+    } catch (error) {
+      console.error('카테고리 데이터를 불러오는데 실패했습니다:', error)
     }
   },
   methods: {
