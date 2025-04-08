@@ -1,5 +1,6 @@
 import DashBoard from '@/views/DashBoard.vue'
 import Layout from '@/views/Layout.vue'
+import TransactionList from '@/views/TransactionList.vue'
 import { createRouter, createWebHistory } from 'vue-router'
 
 const routes = [
@@ -12,6 +13,11 @@ const routes = [
         path: '/',
         name: 'main',
         component: DashBoard,
+      },
+      {
+        path: '/list',
+        name: 'transaction-list',
+        component: TransactionList,
       },
     ],
   },
