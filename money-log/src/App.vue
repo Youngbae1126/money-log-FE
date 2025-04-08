@@ -32,12 +32,4 @@ const handleSubmit = formData => {
   </div>
 </template>
 
-<style scoped>
-.app-container {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 2rem;
-  position: relative;
-  min-height: 100vh;
-}
-</style>
+<style scoped></style>
