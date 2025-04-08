@@ -11,6 +11,13 @@
   /* color */
   --main-color: #feba17;
   --yellow-100: #fdf8eb;
+  --base-color: #eeeeee;
+  --sub-color1: #222831;
+  --sub-color2: #393e46;
+  --point-color: #e25858;
+  --blue: #007aff;
+  --green-500: #509843;
+  --brown-500: #a08e6a;
 }
 
 * {
