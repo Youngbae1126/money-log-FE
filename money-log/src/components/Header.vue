@@ -13,14 +13,16 @@ onMounted(() => {
 <template>
   <header>
     <div class="header">
-      <div class="nickname-container">
-        <img
-          src="../assets/profile-icon.svg"
-          alt="프로필 아이콘"
-          class="profile__icon"
-        />
-        <span class="nickname__text">{{ userStore.nickname }}</span> 님!
-      </div>
+      <RouterLink to="/mypage">
+        <div class="nickname-container">
+          <img
+            src="../assets/profile-icon.svg"
+            alt="프로필 아이콘"
+            class="profile__icon"
+          />
+          <span class="nickname__text">{{ userStore.nickname }}</span> 님!
+        </div>
+      </RouterLink>
       <h1>
         <RouterLink to="/"
           ><img src="../assets/logo.svg" alt="로고"
