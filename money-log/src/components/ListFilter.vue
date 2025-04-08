@@ -1,40 +1,18 @@
 <template>
   <div>
-    <!-- 상단바 -->
-    <div class="top-bar">
-      <div class="user">
-        <img src="@/assets/profile-icon.svg" alt="user icon" />
-        <span class="user-name">홍길동<span class="suffix">님!</span></span>
-      </div>
-      <div class="logo">
-        <img src="@/assets/logo.svg" alt="logo icon" />
-      </div>
-    </div>
-
-    <!-- 달력 -->
-    <div class="month-box">
-      <div class="nav">
-        <span>&lt;</span>
-        <span>4월</span>
-        <span>&gt;</span>
-      </div>
-      <div class="year">2025</div>
-      <div class="description">이번 달에는 이렇게 썼어요!</div>
-    </div>
-
     <!-- 필터 UI -->
     <div class="filter-container">
       <!-- 날짜 -->
       <div class="filter-box">
         <span>일자</span>
-        <input type="date" v-model="date" />
+        <input type="date" v-model="selectedDate" />
       </div>
 
       <!-- 카테고리 -->
       <div class="filter-box">
         <span>카테고리</span>
-        <select v-model="category">
-          <option value=""></option>
+        <select v-model="selectedCategory">
+          <option></option>
           <option>식비</option>
           <option>교통</option>
           <option>쇼핑</option>
@@ -61,12 +39,45 @@
   </div>
 </template>
 
-<script setup>
-import { ref } from 'vue'
-
-const date = ref('2025-04-02')
-const category = ref('')
-const type = ref('')
+<script>
+export default {
+  name: 'CalendarFilter',
+  data() {
+    return {
+      currentMonth: 3,
+      currentYear: 2025,
+      selectedDate: '2025-04-02',
+      selectedCategory: '',
+      type: '',
+      monthNames: [
+        '1월',
+        '2월',
+        '3월',
+        '4월',
+        '5월',
+        '6월',
+        '7월',
+        '8월',
+        '9월',
+        '10월',
+        '11월',
+        '12월',
+      ],
+    }
+  },
+  methods: {
+    prevMonth() {
+      const date = new Date(this.currentYear, this.currentMonth - 1)
+      this.currentMonth = date.getMonth()
+      this.currentYear = date.getFullYear()
+    },
+    nextMonth() {
+      const date = new Date(this.currentYear, this.currentMonth + 1)
+      this.currentMonth = date.getMonth()
+      this.currentYear = date.getFullYear()
+    },
+  },
+}
 </script>
 
 <style scoped>
@@ -127,6 +138,10 @@ body {
   justify-content: center;
   align-items: center;
   gap: 20px;
+}
+
+.month-box .nav span {
+  cursor: pointer;
 }
 
 .month-box .year {
@@ -193,10 +208,5 @@ body {
   background-color: #f4c84c;
   color: white;
   border-color: #f4c84c;
-}
-
-.filter-btn img {
-  width: 18px;
-  height: 18px;
 }
 </style>
