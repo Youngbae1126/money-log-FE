@@ -1,6 +1,13 @@
+import Layout from '@/views/Layout.vue'
 import { createRouter, createWebHistory } from 'vue-router'
 
-const routes = []
+const routes = [
+  {
+    path: '/',
+    name: 'root',
+    component: Layout,
+  },
+]
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
