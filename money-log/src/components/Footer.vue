@@ -36,7 +36,7 @@ footer {
   justify-content: center;
   row-gap: 2rem;
   margin: auto;
-  max-width: 1280px;
+  max-width: 1920px;
   width: calc(100% - 2rem);
   height: 300px;
   font-size: 1rem;
