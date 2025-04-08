@@ -86,6 +86,7 @@ export default {
       date: new Date().toISOString().split('T')[0],
       memo: '',
       category: '식비',
+      // 수입 지출 토글 스위치
       isIncome: false,
     }
   },
