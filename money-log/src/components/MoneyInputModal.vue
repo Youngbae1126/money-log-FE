@@ -2,9 +2,11 @@
   <div class="modal-overlay" v-if="isOpen" @click.self="closeModal">
     <div class="modal-content">
       <div class="modal-header">
+        <!-- 모달 창 헤더 -->
         <img src="@/assets/coin-icon.png" alt="코인 아이콘" class="coin-icon" />
         <h2>거래 내역을 입력하세요</h2>
         <p class="subtitle">지출 또는 수입 내역을 입력하는 곳이에요</p>
+        <!-- 수입/지출 토글 스위치 -->
         <div class="toggle-container">
           <span :class="{ active: !isIncome }">지출</span>
           <label class="toggle-switch">
@@ -14,7 +16,7 @@
           <span :class="{ active: isIncome }">수입</span>
         </div>
       </div>
-
+      <!-- 금액, 날짜 input 모음 -->
       <div class="form-group">
         <div class="input-row">
           <div class="input-group">
@@ -34,7 +36,7 @@
             </label>
           </div>
         </div>
-
+        <!-- 메모, 카테고리 input 모음 -->
         <div class="input-row">
           <div class="input-group memo-group">
             <label
@@ -50,6 +52,7 @@
             <label
               >카테고리 Category
               <select v-model="category">
+                <!-- 임시 옵션 데이터 -->
                 <option value="식비">식비</option>
                 <option value="교통">교통</option>
                 <option value="쇼핑">쇼핑</option>
@@ -59,7 +62,7 @@
           </div>
         </div>
       </div>
-
+      <!-- 버튼 그룹 -->
       <div class="button-group">
         <button class="cancel-btn" @click="closeModal">취소</button>
         <button class="submit-btn" @click="submitForm">저장</button>
