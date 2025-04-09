@@ -1,84 +1,14 @@
 <script setup>
-import { ref, computed, onMounted } from 'vue'
-import axios from 'axios'
+import { onMounted } from 'vue'
 import { useGoalStore } from '@/stores/goal'
 import { useTransactionStore } from '@/stores/transactionStore'
+import DonutChart from './DonutChart.vue'
 
 const goalStore = useGoalStore()
 const transactionStore = useTransactionStore()
 
-// 날짜 → 'YYYY-MM'
-const now = new Date()
-const currentMonth = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}`
-
-// goalStore 내에 정의된 목표값을 가져옴
-const goalAmount = ref(goalStore.targetExpense)
-const transactions = ref([])
-
-// 데이터 로딩
+// 필요한 데이터 로딩은 store의 메서드로
 onMounted(() => {
-  // 목표 예산
-  axios
-    .get('http://localhost:5500/goal')
-    .then(response => {
-      const goalData = response.data
-      if (goalData.month === currentMonth) {
-        goalAmount.value = goalData.targetExpense
-      }
-    })
-    .catch(error => {
-      console.error('목표 예산 불러오기 실패:', error)
-    })
-
-  // 트랜잭션 내역
-  axios
-    .get('http://localhost:5500/transactions')
-    .then(response => {
-      transactions.value = response.data
-    })
-    .catch(error => {
-      console.error('트랜잭션 불러오기 실패:', error)
-    })
-})
-
-// 아래 두 변수는 피니아 활용으로 필요 없음.
-// 이번 달 지출만 필터링
-// const thisMonthExpenses = computed(() =>
-//   transactions.value.filter(
-//     t => t.type === 'expense' && t.date?.startsWith(currentMonth),
-//   ),
-// )
-
-// 실제 지출 합계
-// const currentSpending = computed(() =>
-//   thisMonthExpenses.value.reduce((sum, item) => sum + item.amount, 0),
-// )
-
-// 지출 비율 계산(정수부분까지만 표기)
-const percentageUsed = computed(() => {
-  if (goalAmount.value === 0) return 0
-  const percent = (transactionStore.totalExpense / goalAmount.value) * 100
-  return percent > 100 ? 100 : Math.floor(percent)
-})
-
-// 데이터 로딩
-onMounted(() => {
-  // axios
-  //   .get('http://localhost:5500/goal')
-  //   .then(response => {
-  //     // const thisMonthGoal = response.data
-  //     // thisMonthGoal.find(goal => goal.month === currentMonth)
-  //     const thisMonthGoal = response.data.month
-  //     if (thisMonthGoal) {
-  //       goalAmount.value = goalStore.targetExpense
-  //       currentSpending.value = goalStore.currentExpense
-  //     }
-  //   })
-  //   .catch(error => {
-  //     console.error('데이터 불러오기 실패:', error)
-  //   })
-
-  // 위에 있는 코드를 피니아의 store 활용
   goalStore.getGoalInfo()
   transactionStore.getTransactionInfo()
 })
@@ -86,15 +16,78 @@ onMounted(() => {
 
 <template>
   <div class="GoalTracker">
-    <p>목표 금액: {{ goalStore.targetExpense.toLocaleString() }}원</p>
-    <p>현재 지출: {{ transactionStore.totalExpense.toLocaleString() }}원</p>
-    <p>사용 비율: {{ percentageUsed }}%</p>
+    <h2 class="title">목표 금액까지, <span class="highlight">이만큼</span></h2>
+    <br />
+    <!-- props 넘기지 않고, DonutChart는 내부적으로 store 사용 -->
+    <DonutChart />
+    <div class="text-wrap">
+      <div class="label">
+        <p class="label-name">목표금액</p>
+        <span class="label-value goal">
+          {{ goalStore.targetExpense.toLocaleString() }}원
+        </span>
+      </div>
+      <div class="label">
+        <p class="label-name">현재까지의 소비</p>
+        <span class="label-value nowspend">
+          {{ transactionStore.totalExpense.toLocaleString() }}원
+        </span>
+      </div>
+    </div>
   </div>
 </template>
 
 <style scoped>
 .GoalTracker {
-  font-family: sans-serif;
+  font-family: 'Pretendard', sans-serif;
   padding: 1rem;
+  text-align: center;
+}
+
+.title {
+  text-align: center;
+  font-size: 1rem;
+  line-height: 1.8;
+  font-weight: 900;
+}
+
+.highlight {
+  color: #f5b63c;
+  font-weight: 900;
+  text-shadow: 0.8px 0 currentColor;
+}
+
+/* 하단 정렬을 위한 flex 적용 */
+.text-wrap {
+  margin-top: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  align-items: center;
+}
+
+.label {
+  display: flex;
+  justify-content: space-between;
+  width: 240px;
+}
+
+.label-name {
+  font-weight: 900;
+  font-size: 0.95rem;
+  margin: 0;
+}
+
+.label-value {
+  font-weight: 600;
+  font-size: 0.8rem;
+}
+
+.goal {
+  color: #4c4539;
+}
+
+.nowspend {
+  color: #feba17;
 }
 </style>
