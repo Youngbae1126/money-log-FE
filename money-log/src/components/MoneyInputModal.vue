@@ -97,9 +97,9 @@ export default {
   },
   async created() {
     try {
-      const response = await fetch('/db.json')
+      const response = await fetch('http://localhost:3000/categories')
       const data = await response.json()
-      this.categories = data.categories
+      this.categories = data
       if (this.categories.length > 0) {
         this.category = this.categories[0].name
       }
@@ -109,6 +109,7 @@ export default {
   },
   methods: {
     closeModal() {
+      this.resetForm()
       this.$emit('close')
     },
     // 금액 입력 시 유효성 검사
@@ -126,6 +127,14 @@ export default {
         this.amount = ''
         this.formattedAmount = ''
       }
+    },
+    resetForm() {
+      this.amount = ''
+      this.formattedAmount = ''
+      this.date = new Date().toISOString().split('T')[0]
+      this.memo = ''
+      this.category = this.categories.length > 0 ? this.categories[0].name : ''
+      this.isIncome = false
     },
     submitForm() {
       const formData = {
