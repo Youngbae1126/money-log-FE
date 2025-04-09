@@ -33,7 +33,7 @@ onMounted(() => {
 </template>
 
 <style scoped>
-header {
+.header {
   padding: 0.8rem;
   background-color: transparent;
 }

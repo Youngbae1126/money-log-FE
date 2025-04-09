@@ -1,18 +1,16 @@
-<!-- 상세페이지 배경 컴포넌트 -->
 <template>
-  <!-- 전체 배경 컴포넌트 컨테이너 -->
   <div class="detail-background">
-    <!-- 상단 텍스트 영역 (설명 + 금액) -->
     <div class="detail-background__top">
       <div class="detail-background__desc">
         해당 거래 내역의 상세 페이지예요
       </div>
       <div class="detail-background__amount">
-        <!-- 금액 강조 -->
         <span class="detail-background__amount-number">
-          {{ amount.toLocaleString() }}
+          {{ formattedAmount }}
         </span>
-        <span class="detail-background__amount-text">원 쓰셨네요!</span>
+        <span class="detail-background__amount-text">
+          원 {{ incomeText }}
+        </span>
       </div>
     </div>
 
@@ -20,7 +18,6 @@
       <slot></slot>
     </div>
 
-    <!-- 화면 우측 하단 돼지저금통 이미지 -->
     <img
       src="../assets/profile-icon.svg"
       alt="저금통"
@@ -29,33 +26,44 @@
   </div>
 </template>
 
-<script setup>
-defineProps({
-  userName: String,
-  amount: Number,
-})
+<script>
+import { computed, toRefs } from 'vue'
+
+export default {
+  props: {
+    userName: String,
+    amount: Number,
+    isIncome: [Boolean, String],
+  },
+  setup(props) {
+    const { amount, isIncome } = toRefs(props)
+
+    const formattedAmount = computed(() => {
+      return amount.value ? amount.value.toLocaleString() : '0'
+    })
+
+    const incomeText = computed(() => {
+      return String(isIncome.value).toLowerCase() === 'true'
+        ? '버셨어요!'
+        : '쓰셨네요!'
+    })
+
+    return { formattedAmount, incomeText }
+  },
+}
 </script>
 
 <style scoped>
 .detail-background {
-  background-image: url('@/assets/detail-background-color.svg');
-  background-size: cover;
-  background-repeat: no-repeat;
-  background-position: center;
-  min-height: 100vh;
-  padding: 64px 48px;
   position: relative;
-}
-
-.detail-background__top {
-  display: flex;
-  flex-direction: column;
+  min-height: 100%;
+  padding: 64px 0;
 }
 
 .detail-background__desc {
   margin-top: 8px;
   font-size: 16px;
-  color: var(-sub-color2);
+  color: var(--sub-color2);
 }
 
 .detail-background__amount {
@@ -67,7 +75,6 @@ defineProps({
 .detail-background__amount-number {
   color: var(--main-color);
   margin-right: 4px;
-  font-weight: bold;
 }
 
 .detail-background__amount-text {
@@ -75,7 +82,7 @@ defineProps({
 }
 
 .detail-background__content {
-  margin-top: 60px;
+  margin-top: 48px;
 }
 
 .transaction-detail__pig {
