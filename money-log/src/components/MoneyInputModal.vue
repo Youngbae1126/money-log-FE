@@ -76,6 +76,8 @@
 </template>
 
 <script>
+import axios from 'axios'
+
 export default {
   name: 'MoneyInputModal',
   props: {
@@ -97,8 +99,8 @@ export default {
   },
   async created() {
     try {
-      const response = await fetch('http://localhost:3000/categories')
-      const data = await response.json()
+      const response = await axios.get('http://localhost:5500/categories')
+      const data = await response.data()
       this.categories = data
       if (this.categories.length > 0) {
         this.category = this.categories[0].name
