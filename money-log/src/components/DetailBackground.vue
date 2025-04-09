@@ -9,10 +9,10 @@
       </div>
       <div class="detail-background__amount">
         <!-- 금액 강조 -->
-        <span class="detail-background__amount--number">
+        <span class="detail-background__amount-number">
           {{ amount.toLocaleString() }}
         </span>
-        <span class="detail-background__amount--text">원 쓰셨네요!</span>
+        <span class="detail-background__amount-text">원 쓰셨네요!</span>
       </div>
     </div>
 
@@ -55,7 +55,7 @@ defineProps({
 .detail-background__desc {
   margin-top: 8px;
   font-size: 16px;
-  color: #393e46;
+  color: var(-sub-color2);
 }
 
 .detail-background__amount {
@@ -64,14 +64,14 @@ defineProps({
   margin-top: 14px;
 }
 
-.detail-background__amount--number {
-  color: #feba17;
+.detail-background__amount-number {
+  color: var(--main-color);
   margin-right: 4px;
   font-weight: bold;
 }
 
-.detail-background__amount--text {
-  color: #222831;
+.detail-background__amount-text {
+  color: #000000;
 }
 
 .detail-background__content {
@@ -82,10 +82,9 @@ defineProps({
   position: absolute;
   bottom: 0;
   right: 0;
-  width: 400px;
+  width: clamp(180px, 35vw, 400px);
   height: auto;
   z-index: 0;
-  /* 클릭 방해 X */
   pointer-events: none;
   user-select: none;
 }
