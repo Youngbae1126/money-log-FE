@@ -8,31 +8,51 @@ const currentMonth = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart
 
 // 상태값
 const goalAmount = ref(0)
-const currentSpending = ref(0)
+const transactions = ref([])
 
-// 지출 비율 계산
+// 데이터 로딩
+onMounted(() => {
+  // 목표 예산
+  axios
+    .get('http://localhost:3001/goal')
+    .then(response => {
+      const goalData = response.data
+      if (goalData.month === currentMonth) {
+        goalAmount.value = goalData.targetExpense
+      }
+    })
+    .catch(error => {
+      console.error('목표 예산 불러오기 실패:', error)
+    })
+
+  // 트랜잭션 내역
+  axios
+    .get('http://localhost:3001/transactions')
+    .then(response => {
+      transactions.value = response.data
+    })
+    .catch(error => {
+      console.error('트랜잭션 불러오기 실패:', error)
+    })
+})
+
+// 이번 달 지출만 필터링
+const thisMonthExpenses = computed(() =>
+  transactions.value.filter(
+    t => t.type === 'expense' && t.date?.startsWith(currentMonth),
+  ),
+)
+
+// 실제 지출 합계
+const currentSpending = computed(() =>
+  thisMonthExpenses.value.reduce((sum, item) => sum + item.amount, 0),
+)
+
+// 지출 비율 계산(정수부분까지만 표기)
 const percentageUsed = computed(() => {
   if (goalAmount.value === 0) return 0
   const percent = (currentSpending.value / goalAmount.value) * 100
   return percent > 100 ? 100 : Math.floor(percent)
-})
-
-// 데이터 로딩
-onMounted(() => {
-  axios
-    .get('http://localhost:3001/goal')
-    .then(response => {
-      const thisMonthGoal = response.data.find(
-        goal => goal.month === currentMonth,
-      )
-      if (thisMonthGoal) {
-        goalAmount.value = thisMonthGoal.targetExpense
-        currentSpending.value = thisMonthGoal.currentExpense
-      }
-    })
-    .catch(error => {
-      console.error('데이터 불러오기 실패:', error)
-    })
 })
 </script>
 
