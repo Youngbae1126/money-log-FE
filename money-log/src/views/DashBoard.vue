@@ -8,8 +8,8 @@ import MostSpent from '@/components/MostSpent.vue'
 <template>
   <div class="dashboard">
     <div class="dashboard__left-container">
-      <GoalTracker />
       <MostSpent />
+      <GoalTracker />
     </div>
     <div class="dashboard__right-container">
       <IEComparing />
@@ -23,16 +23,16 @@ import MostSpent from '@/components/MostSpent.vue'
   display: flex;
   width: calc(100% - 2rem);
   max-width: 1920px;
-  margin: auto;
+  margin: 1rem;
   padding: 1rem;
   padding-bottom: 5rem;
   justify-content: space-between;
-  gap: 2rem;
+  gap: 1rem;
 }
 .dashboard__left-container {
-  flex-grow: 0.1;
+  flex-grow: 0.05;
 }
 .dashboard__right-container {
-  flex-grow: 0.9;
+  flex-grow: 0.95;
 }
 </style>

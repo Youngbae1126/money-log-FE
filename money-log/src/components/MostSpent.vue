@@ -15,6 +15,7 @@ onMounted(() => {
     .get('http://localhost:3001/transactions')
     .then(response => {
       transactions.value = response.data
+      assignColorsToCategories()
     })
     .catch(error => {
       console.error('지출 데이터 불러오기 실패:', error)
@@ -56,29 +57,126 @@ const topCategories = computed(() => {
     .sort((a, b) => b.total - a.total)
     .slice(0, 3)
 })
+
+// 사용할 색상 팔레트 (카테고리 개수보다 많게 준비)
+const colorPalette = ['#ef4444', '#facc15', '#22c55e', '#3b82f6', '#a855f7']
+
+// 카테고리별 색상 매핑을 저장할 ref
+const categoryColorMap = ref({})
+
+// 카테고리에 색상 자동 매핑
+function assignColorsToCategories() {
+  const categories = [
+    ...new Set(
+      transactions.value.filter(t => t.type === 'expense').map(t => t.category),
+    ),
+  ]
+  const map = {}
+  categories.forEach((cat, i) => {
+    map[cat] = colorPalette[i % colorPalette.length]
+  })
+  categoryColorMap.value = map
+}
 </script>
 
 <template>
-  <div class="p-4 w-[400px] border rounded-lg shadow-md">
-    <h2 class="text-xl font-bold mb-4">
-      이번 달에는 {{ topCategories[0]?.category || '...' }}에 가장 많이
-      쓰셨네요!
-    </h2>
-    <ul v-if="topCategories.length">
-      <li
-        v-for="(item, index) in topCategories"
-        :key="index"
-        class="mb-2 flex justify-between items-center"
-      >
-        <div>
-          <span class="font-semibold">{{ item.category }}</span>
-          <span class="text-gray-500 text-sm">({{ item.percentage }}%)</span>
-        </div>
-        <div>{{ (item.total || 0).toLocaleString() }} 원</div>
-      </li>
-    </ul>
-    <p v-else>지출 내역이 없습니다.</p>
+  <div class="most-spent p-4 w-[400px] rounded-lg shadow-md">
+    <div class="wrapper">
+      <h2 class="title mb-4">
+        이번 달에는 <br />
+        <span class="highlight">{{ topCategories[0]?.category || '...' }}</span
+        >에 가장 많이 쓰셨네요!
+      </h2>
+      <ul v-if="topCategories.length">
+        <li
+          v-for="(item, index) in topCategories"
+          :key="index"
+          class="category-item flex justify-between items-center mb-3"
+        >
+          <div class="left flex items-center">
+            <span
+              class="dot"
+              :style="{ backgroundColor: categoryColorMap[item.category] }"
+            ></span>
+            <span class="category-name">{{ item.category }}</span>
+          </div>
+          <div class="right">
+            <span class="percentage">{{ item.percentage }}%</span>
+          </div>
+        </li>
+      </ul>
+      <p v-else>지출 내역이 없습니다.</p>
+    </div>
   </div>
 </template>
 
-<style scoped lang="scss"></style>
+<style scoped>
+.most-spent {
+  font-family: 'Pretendard', sans-serif;
+}
+
+.wrapper {
+  margin: 1rem;
+}
+
+.title {
+  text-align: center;
+  font-size: 1rem;
+  line-height: 1.8;
+  font-weight: 900;
+}
+
+.highlight {
+  color: #dc2626;
+  font-size: 1rem;
+  font-weight: 900;
+  text-shadow: 0.8px 0 currentColor;
+}
+
+.category-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  margin-right: 2px;
+  display: inline-block;
+}
+
+.left {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.category-name {
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+.percentage {
+  font-size: 0.8rem;
+  color: #808080;
+}
+
+/* 동적으로 사용할 색상 클래스 */
+.red {
+  background-color: #e25858;
+}
+.yellow {
+  background-color: #feba17;
+}
+.green {
+  background-color: #509843;
+}
+.blue {
+  background-color: #007aff;
+}
+.purple {
+  background-color: #a855f7;
+}
+</style>
