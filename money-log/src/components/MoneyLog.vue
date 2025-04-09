@@ -7,7 +7,7 @@ import trophy from '@/assets/trophy.svg'
 import money from '@/assets/money.svg'
 
 const userStore = useUserStore()
-const API_URL = 'http://localhost:3000/log'
+const API_URL = 'http://localhost:5500/log'
 const userLogData = ref([])
 
 // 유저 정보 가져오기
