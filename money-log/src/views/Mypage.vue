@@ -11,6 +11,7 @@ const userStore = useUserStore()
 const goalStore = useGoalStore()
 const transactionStore = useTransactionStore()
 const newGoalAmount = ref('')
+const newNickname = ref('')
 
 // 유저, 목표 정보 가져오기
 onMounted(() => {
@@ -38,6 +39,28 @@ const updateGoal = async () => {
     newGoalAmount.value = ''
   } catch (error) {
     console.error('목표 금액 업데이트 실패:', error)
+  }
+}
+
+// 닉네임 업데이트
+const updateNickname = async () => {
+  if (!newNickname.value) return
+
+  try {
+    // 현재 user 데이터 가져오기
+    const { data: currentUser } = await axios.get('http://localhost:5500/user')
+
+    // 새로운 닉네임으로 업데이트
+    await axios.put('http://localhost:5500/user', {
+      ...currentUser,
+      nickname: newNickname.value,
+    })
+
+    // store 업데이트
+    userStore.nickname = newNickname.value
+    newNickname.value = ''
+  } catch (error) {
+    console.error('닉네임 업데이트 실패:', error)
   }
 }
 </script>
@@ -85,14 +108,21 @@ const updateGoal = async () => {
             <button class="goal-update-btn" @click="updateGoal">설정</button>
           </div>
         </div>
-        <div class="theme__container">
-          <div class="theme__text">
-            <p class="theme__title">테마를 변경하시겠어요?</p>
-            아래의 버튼을 누르면 모드가 변경됩니다
+        <div class="nickname__container">
+          <div class="nickname__text">
+            <p class="nickname__title">닉네임을 변경하시겠어요?</p>
+            자신만의 독특한 닉네임을 만들어보세요
           </div>
-          <div class="theme__btn-box">
-            <button class="light-mode__btn">라이트모드</button>
-            <button class="dark-mode__btn">다크모드</button>
+          <div class="nickname__input-box">
+            <input
+              type="text"
+              name="nickname"
+              placeholder="닉네임을 입력하세요"
+              v-model="newNickname"
+            />
+            <button class="nickname-update-btn" @click="updateNickname">
+              설정
+            </button>
           </div>
         </div>
       </div>
@@ -210,11 +240,6 @@ const updateGoal = async () => {
   font-size: 1.2rem;
   font-weight: 800;
 }
-.goal__input-box > input {
-  width: 100%;
-  font-size: 1.2rem;
-  margin-left: 0.5rem;
-}
 
 /* 숫자 입력 화살표 제거 */
 .goal__input-box > input::-webkit-outer-spin-button,
@@ -227,7 +252,8 @@ const updateGoal = async () => {
   -moz-appearance: textfield;
 }
 
-.goal-update-btn {
+.goal-update-btn,
+.nickname-update-btn {
   width: 5rem;
   padding: 0.7rem;
   background-color: #feba17;
@@ -238,11 +264,32 @@ const updateGoal = async () => {
   font-size: 1rem;
   transition: background-color 0.3s;
 }
-.goal-update-btn:hover {
+.goal-update-btn:hover,
+.nickname-update-btn:hover {
   background-color: #ffedcb;
 }
-.theme__container {
-  height: 100%;
+/* 닉네임 수정 버튼 관련 스타일 */
+.nickname__input-box {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border: 1px solid var(--gray-300);
+  border-radius: 10px;
+  box-shadow: 1px 2px 2px rgba(109, 109, 109, 0.3);
+  padding: 0.8rem;
+  margin-top: 0.5rem;
+  width: 100%;
+  color: var(--gray-400);
+  font-size: 1.2rem;
+  font-weight: 800;
+}
+.goal__input-box > input,
+.nickname__input-box > input {
+  width: 100%;
+  font-size: 1.2rem;
+  margin-left: 0.5rem;
+}
+.nickname__container {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
@@ -252,42 +299,16 @@ const updateGoal = async () => {
   font-size: 1rem;
   color: var(--gray-400);
 }
-.theme__text {
+.nickname__text {
   display: flex;
   flex-direction: column;
   margin-right: 1rem;
 }
-.theme__title {
+.nickname__title {
   color: black;
   font-weight: 800;
   font-size: 1.5rem;
   line-height: 2.5rem;
-}
-.theme__btn-box {
-  display: flex;
-  flex-grow: 0.8;
-  align-items: flex-start;
-  width: 100%;
-  gap: 2rem;
-}
-.theme__btn-box button {
-  width: 100%;
-  padding: 0.7rem 0;
-  border-radius: 10px;
-  font-size: 1rem;
-  font-weight: 400;
-  background-color: #f6f6f6;
-  border: 1px solid var(--gray-300);
-  color: black;
-}
-.light-mode__btn:hover {
-  background-color: var(--yellow-100);
-  border: 1px solid var(--yellow-100);
-}
-.dark-mode__btn:hover {
-  background-color: #02003a;
-  border: 1px solid #02003a;
-  color: white;
 }
 .bottom-container-right {
   display: flex;
