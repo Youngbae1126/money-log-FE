@@ -7,6 +7,7 @@ const API_URL = 'http://localhost:5500/transactions'
 export const useTransactionStore = defineStore('transactions', {
   state: () => ({
     transactionData: [],
+    month: '',
   }),
   getters: {
     // 수입 계산
@@ -18,11 +19,37 @@ export const useTransactionStore = defineStore('transactions', {
       // array.reduce((누적값, 현재값) => {  // 로직  return 새로운 누적값}, 초기값)
       return filterData.reduce((total, item) => total + item.amount, 0)
     },
+    // 월별 수입 계산
+    monthTotalIncome: state => {
+      return month => {
+        const incomeFilterData = state.transactionData.filter(
+          item => item.type === 'income' && item.date.startsWith(month),
+        )
+        const total = incomeFilterData.reduce(
+          (sum, item) => sum + item.amount,
+          0,
+        )
+        return total
+      }
+    },
     // 지출 계산
     totalExpense(state) {
       return state.transactionData
         .filter(item => item.type === 'expense')
         .reduce((sum, item) => sum + item.amount, 0)
+    },
+    // 월별 지출 계산
+    monthTotalExpense: state => {
+      return month => {
+        const expenseFilterData = state.transactionData.filter(
+          item => item.type === 'expense' && item.date.startsWith(month),
+        )
+        const total = expenseFilterData.reduce(
+          (sum, item) => sum + item.amount,
+          0,
+        )
+        return total
+      }
     },
     // 수입 - 지출 계산
     remainAmount(state) {
@@ -35,6 +62,12 @@ export const useTransactionStore = defineStore('transactions', {
           .reduce((sum, item) => sum + item.amount, 0)
       )
     },
+    // 특정 월('YYYY-MM')에 해당하는 거래 내역 필터링
+    monthFilterList(state) {
+      return month => {
+        return state.transactionData.filter(item => item.date.startsWith(month))
+      }
+    },
   },
   actions: {
     async getTransactionInfo() {
@@ -44,6 +77,19 @@ export const useTransactionStore = defineStore('transactions', {
       } catch (err) {
         console.log(errorMessages)
         throw err
+      }
+    },
+    async getMonthTransaction(month) {
+      this.month = month.slice(5, 7)
+      try {
+        const res = await axios.get(API_URL)
+        this.transactionData = res.data
+          .filter(item => item.date.startsWith(month))
+          .sort((item1, item2) => {
+            new Date(item1.date) - new Date(item2.date)
+          })
+      } catch (error) {
+        console.log(error)
       }
     },
   },
