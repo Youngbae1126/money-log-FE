@@ -34,38 +34,86 @@ function nextMonth() {
 </script>
 
 <template>
-  <div class="TransactionList">
-    <!-- 달력 상단 바 -->
-    <div class="top-bar">
-      <div class="logo"></div>
-    </div>
-
-    <!-- 달력 -->
-    <div class="month-box">
-      <div class="nav">
-        <span @click="prevMonth">&lt;</span>
-        <span>{{ monthNames[currentMonth] }}</span>
-        <span @click="nextMonth">&gt;</span>
+  <div class="transaction-list">
+    <div class="transaction__bg"></div>
+    <div class="transaction-filter__container">
+      <!-- 달력 상단 바 -->
+      <div class="top-bar">
+        <div class="logo"></div>
       </div>
-      <div class="year">{{ currentYear }}</div>
-      <div class="description">이번 달에는 이렇게 썼어요!</div>
+      <!-- 달력 -->
+      <div class="month-box">
+        <div class="nav">
+          <span @click="prevMonth">&lt;</span>
+          <span>{{ monthNames[currentMonth] }}</span>
+          <span @click="nextMonth">&gt;</span>
+        </div>
+        <div class="year">{{ currentYear }}</div>
+        <div class="description">이번 달에는 이렇게 썼어요!</div>
+      </div>
+      <ListFilter />
     </div>
 
-    <ListFilter />
+    <!-- 리스트 -->
+    <div class="transaction-list__container">
+      <div class="transaction-list__top-container">
+        전체 내역 20건
+        <div class="amount__container">수입 1,000,000원 | 지출 300,000원</div>
+      </div>
+      <div class="transaction-list__bottom-container">
+        <ul class="transaction-list__list">
+          <li>
+            <div class="transaction-list__title">
+              <span>Category</span>
+              <span>Date</span>
+              <span>Memo</span>
+            </div>
+          </li>
+          <li class="list__line"></li>
+          <!-- 여기 아래 부분 v-for문 돌리면 됩니다.-->
+          <RouterLink to="/detail">
+            <li>
+              <div class="list-content__ctg">
+                <img src="../assets/money.svg" alt="아이콘" />
+                <div class="list-content__date">2025/04/08</div>
+                <div class="list-content__memo">치킨 사먹음~</div>
+              </div>
+            </li>
+          </RouterLink>
+          <RouterLink to="/detail">
+            <li>
+              <div class="list-content__ctg">
+                <img src="../assets/money.svg" alt="아이콘" />
+                <div class="list-content__date">2025/04/08</div>
+                <div class="list-content__memo">치킨 사먹음~</div>
+              </div>
+            </li>
+          </RouterLink>
+        </ul>
+      </div>
+    </div>
   </div>
 </template>
 
 <style scoped>
-.TransactionList {
+.transaction-list {
+  position: relative;
   padding-top: 40px;
 }
-
-body {
-  font-family: 'Pretendard', sans-serif;
-  margin: 0;
-  background-color: #fdf1d7;
+.transaction__bg {
+  background-color: var(--yellow-200);
+  height: 400px;
+  top: -106px;
+  position: relative;
+  z-index: -100;
 }
-
+.transaction-filter__container {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  top: -20rem;
+  align-items: center;
+}
 .top-bar {
   display: flex;
   justify-content: space-between;
@@ -155,5 +203,62 @@ body {
   background-color: #f4c84c;
   color: white;
   border-color: #f4c84c;
+}
+
+.transaction-list__container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  max-width: 1280px;
+  width: calc(100% - 2rem);
+  margin: auto;
+  position: relative;
+  top: -20rem;
+}
+.transaction-list__top-container {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: var(--gray-500);
+}
+.amount__container {
+  font-size: 1.2rem;
+  font-weight: 400;
+  color: var(--gray-500);
+}
+.transaction-list__bottom-container {
+  width: 100%;
+  margin-top: 2rem;
+}
+.transaction-list__list {
+  display: flex;
+  flex-direction: column;
+}
+.transaction-list__title {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+  align-items: center;
+  color: black;
+  font-size: 1.2rem;
+  font-weight: 800;
+}
+.list__line {
+  margin-top: 1rem;
+  border-bottom: 1px solid var(--gray-300);
+}
+.list-content__ctg {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem;
+  border-bottom: 1px solid var(--gray-300);
+}
+.list-content__ctg img {
+  width: 3rem;
 }
 </style>
