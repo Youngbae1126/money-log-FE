@@ -53,15 +53,23 @@
           <div class="input-group">
             <label
               >카테고리 Category
-              <select v-model="category">
-                <option
-                  v-for="cat in categories"
-                  :key="cat.id"
-                  :value="cat.name"
-                >
-                  {{ cat.name }}
-                </option>
-              </select>
+              <div class="category-select">
+                <img
+                  v-if="selectedCategoryIcon"
+                  :src="selectedCategoryIcon"
+                  :alt="category"
+                  class="category-icon"
+                />
+                <select v-model="category" @change="updateSelectedCategory">
+                  <option
+                    v-for="cat in categories"
+                    :key="cat.id"
+                    :value="cat.name"
+                  >
+                    {{ cat.name }}
+                  </option>
+                </select>
+              </div>
             </label>
           </div>
         </div>
@@ -77,6 +85,7 @@
 
 <script>
 import axios from 'axios'
+import { addIconsToCategories, getCategoryIcon } from '@/stores/categoryIcons'
 
 export default {
   name: 'MoneyInputModal',
@@ -95,21 +104,33 @@ export default {
       category: '',
       isIncome: false,
       categories: [],
+      selectedCategoryIcon: null,
     }
   },
   async created() {
     try {
       const response = await axios.get('http://localhost:5500/categories')
       const data = response.data
-      this.categories = data
+      // 카테고리 데이터에 아이콘 정보 추가
+      this.categories = addIconsToCategories(data)
       if (this.categories.length > 0) {
         this.category = this.categories[0].name
+        this.updateSelectedCategory()
       }
     } catch (error) {
       console.error('카테고리 데이터를 불러오는데 실패했습니다:', error)
     }
   },
   methods: {
+    // 선택된 카테고리의 아이콘 업데이트
+    updateSelectedCategory() {
+      const selectedCategory = this.categories.find(
+        cat => cat.name === this.category,
+      )
+      if (selectedCategory) {
+        this.selectedCategoryIcon = getCategoryIcon(selectedCategory.code)
+      }
+    },
     closeModal() {
       this.resetForm()
       this.$emit('close')
@@ -137,6 +158,7 @@ export default {
       this.memo = ''
       this.category = this.categories.length > 0 ? this.categories[0].name : ''
       this.isIncome = false
+      this.updateSelectedCategory()
     },
     submitForm() {
       const formData = {
@@ -215,7 +237,7 @@ h2 {
 }
 
 .memo-group {
-  flex: 2;
+  flex: 1;
 }
 
 label {
@@ -335,5 +357,28 @@ input:checked + .toggle-slider:before {
 .toggle-container span.active {
   color: #333;
   font-weight: bold;
+}
+
+.category-select {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.category-icon {
+  width: 40px;
+  height: 40px;
+  object-fit: contain;
+}
+
+select {
+  flex: 1;
+  padding: 0.75rem;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  font-size: 1rem;
+  margin: 0.5rem 0;
+  background-color: white;
+  cursor: pointer;
 }
 </style>
