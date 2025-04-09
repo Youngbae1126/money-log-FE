@@ -1,42 +1,5 @@
-@import url('https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css');
-@font-face {
-  font-family: 'Pretendard-Regular';
-  src: url('https://fastly.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Regular.woff')
-    format('woff');
-  font-weight: 400;
-  font-style: normal;
-}
-
-:root {
-  /* color */
-  --main-color: #feba17;
-  --yellow-100: #fdf8eb;
-  --yellow-200: #f9edcf;
-  --base-color: #eeeeee;
-  --sub-color1: #222831;
-  --sub-color2: #393e46;
-  --point-color: #e25858;
-  --blue: #007aff;
-  --green-300: #82a938;
-  --green-500: #509843;
-  --brown-300: #b2a99b;
-  --brown-500: #a08e6a;
-  --brown-700: #4c4539;
-  --gray-200: #d9d9d9;
-  --gray-300: #cccccc;
-  --gray-400: #808080;
-  --gray-500: #262626;
-}
-
 * {
+  margin: 0;
+  padding: 0;
   box-sizing: border-box;
-  font-family: 'Pretendard-Regular' !important;
-}
-a {
-  text-decoration: none;
-  color: inherit;
-}
-input {
-  border: none;
-  outline: none;
 }

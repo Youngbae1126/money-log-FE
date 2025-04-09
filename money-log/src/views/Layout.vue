@@ -1,13 +1,8 @@
 <!-- eslint-disable vue/multi-word-component-names -->
-<script setup>
-import TheHeader from '../components/Header.vue'
-import TheFooter from '../components/Footer.vue'
-</script>
+<script setup></script>
 
 <template>
-  <TheHeader />
-  <RouterView />
-  <TheFooter />
+  <div class="Layout"></div>
 </template>
 
 <style scoped>
