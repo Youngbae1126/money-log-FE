@@ -12,7 +12,7 @@ const transactions = ref([])
 // API 호출
 onMounted(() => {
   axios
-    .get('http://localhost:3001/transactions')
+    .get('http://localhost:5500/transactions')
     .then(response => {
       transactions.value = response.data
       assignColorsToCategories()

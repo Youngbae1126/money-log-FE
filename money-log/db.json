@@ -30,7 +30,7 @@
   "goal": {
     "month": "2025-04",
     "currentExpense": 100000,
-    "targetExpense": 200000
+    "targetExpense": 500000
   },
   "transactions": [
     {

@@ -34,7 +34,7 @@ const difference = computed(() => totalIncome.value - totalExpense.value)
 // 데이터 불러오기
 onMounted(() => {
   axios
-    .get('http://localhost:3001/transactions')
+    .get('http://localhost:5500/transactions')
     .then(response => {
       transactions.value = response.data
     })
