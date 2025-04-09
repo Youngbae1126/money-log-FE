@@ -49,7 +49,6 @@ defineProps({
   background-color: #ffffff;
   padding: 64px 60px;
   border-radius: 28px;
-  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.08);
 
   width: 100%;
   max-width: 1200px;
@@ -78,13 +77,13 @@ defineProps({
 }
 
 .detail-center__highlight--category {
-  color: #d55353;
+  color: var(--point-color);
 }
 .detail-center__highlight--date {
-  color: #4680ff;
+  color: var(--blue);
 }
 .detail-center__highlight--memo {
-  color: #3cb371;
+  color: var(--green-500);
 }
 
 .detail-center__close {
@@ -92,7 +91,7 @@ defineProps({
   top: 24px;
   right: 24px;
   background: white;
-  border: 1px solid #eeeeee;
+  border: 1px solid var(--gray-300);
   border-radius: 8px;
   padding: 6px 14px;
   font-size: 13px;
