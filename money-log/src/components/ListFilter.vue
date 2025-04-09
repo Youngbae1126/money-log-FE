@@ -1,3 +1,29 @@
+<script setup>
+import { ref } from 'vue'
+
+const currentMonth = ref(3)
+const currentYear = ref(2025)
+const selectedDate = ref('2025-04-02')
+const selectedCategory = ref('')
+const type = ref('')
+
+// 월 이름 배열
+const monthNames = [
+  '1월',
+  '2월',
+  '3월',
+  '4월',
+  '5월',
+  '6월',
+  '7월',
+  '8월',
+  '9월',
+  '10월',
+  '11월',
+  '12월',
+]
+</script>
+
 <template>
   <div>
     <!-- 필터 UI -->
@@ -39,46 +65,12 @@
   </div>
 </template>
 
-<script>
-export default {
-  name: 'CalendarFilter',
-  data() {
-    return {
-      currentMonth: 3,
-      currentYear: 2025,
-      selectedDate: '2025-04-02',
-      selectedCategory: '',
-      type: '',
-      monthNames: [
-        '1월',
-        '2월',
-        '3월',
-        '4월',
-        '5월',
-        '6월',
-        '7월',
-        '8월',
-        '9월',
-        '10월',
-        '11월',
-        '12월',
-      ],
-    }
-  },
-  methods: {
-    prevMonth() {
-      const date = new Date(this.currentYear, this.currentMonth - 1)
-      this.currentMonth = date.getMonth()
-      this.currentYear = date.getFullYear()
-    },
-    nextMonth() {
-      const date = new Date(this.currentYear, this.currentMonth + 1)
-      this.currentMonth = date.getMonth()
-      this.currentYear = date.getFullYear()
-    },
-  },
+<style scoped>
+.ListFilter {
 }
-</script>
+</style>
+
+<script></script>
 
 <style scoped>
 body {

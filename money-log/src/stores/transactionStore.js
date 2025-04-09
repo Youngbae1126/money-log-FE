@@ -10,6 +10,13 @@ export const useTransactionStore = defineStore('transactions', {
     month: '',
   }),
   getters: {
+    // 월별 데이터 개수 계산
+    countTransactionData: state => {
+      return month => {
+        return state.transactionData.filter(item => item.date.startsWith(month))
+          .length
+      }
+    },
     // 수입 계산
     totalIncome(state) {
       let filterData = state.transactionData.filter(
@@ -70,6 +77,7 @@ export const useTransactionStore = defineStore('transactions', {
     },
   },
   actions: {
+    // 전체 거래 내역 가져오기
     async getTransactionInfo() {
       try {
         const response = await axios.get(API_URL)
@@ -79,12 +87,28 @@ export const useTransactionStore = defineStore('transactions', {
         throw err
       }
     },
+    // 선택된 월별 필터링된 거래내역 오름차순 정렬
     async getMonthTransaction(month) {
       this.month = month.slice(5, 7)
       try {
         const res = await axios.get(API_URL)
         this.transactionData = res.data
           .filter(item => item.date.startsWith(month))
+          .sort((item1, item2) => {
+            new Date(item1.date) - new Date(item2.date)
+          })
+      } catch (error) {
+        console.log(error)
+      }
+    },
+    //
+    async getMonthIncomeTransaction(month) {
+      this.month = month.slice(5, 7)
+      try {
+        const res = await axios.get(API_URL)
+        this.transactionData = res.data
+          .filter(item => item.date.startsWith(month))
+          .filter(item => item.type === 'income')
           .sort((item1, item2) => {
             new Date(item1.date) - new Date(item2.date)
           })
