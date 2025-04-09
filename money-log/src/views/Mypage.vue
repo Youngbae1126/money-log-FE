@@ -4,11 +4,13 @@ import MoneyLog from '@/components/MoneyLog.vue'
 import { useGoalStore } from '@/stores/goal'
 import { useTransactionStore } from '@/stores/transactionStore'
 import { useUserStore } from '@/stores/users'
-import { onMounted } from 'vue'
+import { onMounted, ref } from 'vue'
+import axios from 'axios'
 
 const userStore = useUserStore()
 const goalStore = useGoalStore()
 const transactionStore = useTransactionStore()
+const newGoalAmount = ref('')
 
 // 유저, 목표 정보 가져오기
 onMounted(() => {
@@ -16,6 +18,28 @@ onMounted(() => {
   goalStore.getGoalInfo()
   transactionStore.getTransactionInfo()
 })
+
+// 목표 금액 업데이트
+const updateGoal = async () => {
+  if (!newGoalAmount.value) return
+
+  try {
+    // 현재 goal 데이터 가져오기
+    const { data: currentGoal } = await axios.get('http://localhost:5500/goal')
+
+    // 새로운 targetExpense로 업데이트
+    await axios.put('http://localhost:5500/goal', {
+      ...currentGoal,
+      targetExpense: Number(newGoalAmount.value),
+    })
+
+    // store 업데이트
+    goalStore.targetExpense = Number(newGoalAmount.value)
+    newGoalAmount.value = ''
+  } catch (error) {
+    console.error('목표 금액 업데이트 실패:', error)
+  }
+}
 </script>
 
 <template>
@@ -56,7 +80,9 @@ onMounted(() => {
               name="goal"
               min="1"
               placeholder="목표 금액을 입력하세요"
+              v-model="newGoalAmount"
             />
+            <button class="goal-update-btn" @click="updateGoal">설정</button>
           </div>
         </div>
         <div class="theme__container">
@@ -178,7 +204,7 @@ onMounted(() => {
   border-radius: 10px;
   box-shadow: 1px 2px 2px rgba(109, 109, 109, 0.3);
   padding: 0.8rem;
-  margin-top: 1.5rem;
+  margin-top: 0.5rem;
   width: 100%;
   color: var(--gray-400);
   font-size: 1.2rem;
@@ -188,6 +214,32 @@ onMounted(() => {
   width: 100%;
   font-size: 1.2rem;
   margin-left: 0.5rem;
+}
+
+/* 숫자 입력 화살표 제거 */
+.goal__input-box > input::-webkit-outer-spin-button,
+.goal__input-box > input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.goal__input-box > input[type='number'] {
+  -moz-appearance: textfield;
+}
+
+.goal-update-btn {
+  width: 5rem;
+  padding: 0.7rem;
+  background-color: #feba17;
+  color: black;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: background-color 0.3s;
+}
+.goal-update-btn:hover {
+  background-color: #ffedcb;
 }
 .theme__container {
   height: 100%;
