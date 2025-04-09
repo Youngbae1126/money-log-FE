@@ -100,7 +100,7 @@ export default {
   async created() {
     try {
       const response = await axios.get('http://localhost:5500/categories')
-      const data = await response.data()
+      const data = response.data
       this.categories = data
       if (this.categories.length > 0) {
         this.category = this.categories[0].name
