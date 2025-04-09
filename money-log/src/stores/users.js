@@ -2,7 +2,7 @@ import axios from 'axios'
 import { defineStore } from 'pinia'
 import { errorMessages } from 'vue/compiler-sfc'
 
-const API_URL = 'http://localhost:3000/user'
+const API_URL = 'http://localhost:5500/user'
 
 export const useUserStore = defineStore('user', {
   state: () => ({
