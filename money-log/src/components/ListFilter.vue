@@ -208,6 +208,9 @@ body {
   justify-content: center;
   gap: 12px;
   flex-wrap: wrap;
+
+  position: relative;
+  top: -50px;
 }
 
 .filter-box {

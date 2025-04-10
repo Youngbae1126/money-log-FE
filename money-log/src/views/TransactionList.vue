@@ -178,15 +178,18 @@ onMounted(() => {
 .month-box {
   text-align: center;
   margin-top: 10px;
+  position: relative;
+  top: -90px;
 }
 
 .month-box .nav {
-  font-size: 32px;
+  font-size: 3rem;
   font-weight: bold;
   display: flex;
   justify-content: center;
   align-items: center;
   gap: 20px;
+  margin-bottom: 2rem;
 }
 
 .month-box .nav span {
@@ -196,6 +199,7 @@ onMounted(() => {
 .month-box .year {
   font-size: 18px;
   margin-top: 8px;
+  font-weight: 800;
   color: #444;
 }
 
@@ -203,60 +207,7 @@ onMounted(() => {
   margin-top: 10px;
   font-size: 14px;
   color: #333;
-}
-
-.filter-container {
-  background: #fff8e6;
-  padding: 20px;
-  margin: 30px auto;
-  border-radius: 20px;
-  max-width: 900px;
-  display: flex;
-  justify-content: center;
-  gap: 12px;
-  flex-wrap: wrap;
-}
-
-.filter-box {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  background-color: white;
-  padding: 10px 16px;
-  border-radius: 12px;
-  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
-  border: 1px solid #ddd;
-  font-size: 16px;
-  font-weight: bold;
-}
-
-.filter-box input[type='date'],
-.filter-box select {
-  border: none;
-  font-family: 'Pretendard';
-  font-size: 16px;
-  background: none;
-  cursor: pointer;
-  font-weight: normal;
-}
-
-.filter-btn {
-  padding: 8px 14px;
-  border-radius: 10px;
-  border: 1px solid #ccc;
-  background-color: white;
-  font-size: 16px;
-  font-weight: bold;
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  cursor: pointer;
-}
-
-.filter-btn.active {
-  background-color: #f4c84c;
-  color: white;
-  border-color: #f4c84c;
+  font-weight: 800;
 }
 
 .transaction-list__container {
