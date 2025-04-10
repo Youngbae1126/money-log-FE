@@ -1,91 +1,197 @@
+<!-- 상세페이지 흰색 카드 컴포넌트 -->
 <template>
   <div class="detail-center">
-    <button class="detail-center__close" @click="$router.back()">X</button>
-
-    <!-- 카테고리 -->
-    <div class="detail-center__item">
-      <img
-        :src="categoryIcon"
-        class="detail-center__icon"
-        alt="카테고리 아이콘"
-      />
-      <span class="detail-center__highlight detail-center__highlight-category">
-        {{ category.name }}
-      </span>
-      카테고리에 소비하셨어요
+    <!-- 버튼 그룹 -->
+    <div class="detail-center__button-group">
+      <button
+        class="detail-center__btn detail-center__edit"
+        @click="openEditModal"
+      >
+        수정
+      </button>
+      <button
+        class="detail-center__btn detail-center__delete"
+        @click="deleteTransaction"
+      >
+        삭제
+      </button>
+      <button class="detail-center__btn detail-center__close" @click="backList">
+        닫기
+      </button>
     </div>
 
-    <!-- 날짜 -->
+    <!-- 카테고리 표시 -->
     <div class="detail-center__item">
-      <img :src="calendarIcon" class="detail-center__icon" alt="달력 아이콘" />
-      <span class="detail-center__highlight detail-center__highlight-date">
-        {{ date }}
-      </span>
-      에 사용하셨어요
+      🍔
+      <span
+        class="detail-center__highlight detail-center__highlight--category"
+        >{{ transactionData.category }}</span
+      >
+      <div v-if="transactionData.type === 'income'">
+        카테고리로 들어온 돈이에요
+      </div>
+      <div v-else>카테고리에 소비하셨어요</div>
     </div>
 
-    <!-- 메모 -->
+    <!-- 날짜 표시 -->
     <div class="detail-center__item">
-      <img :src="memoIcon" class="detail-center__icon" alt="메모 아이콘" />
-      <span class="detail-center__highlight detail-center__highlight-memo">
-        {{ memo }}
-      </span>
-      이라는 메모를 남기셨네요
+      📅
+      <span class="detail-center__highlight detail-center__highlight--date">{{
+        transactionData.date
+      }}</span>
+      <div v-if="transactionData.type === 'income'">에 들어온 돈이에요</div>
+      <div v-else>에 사용하셨어요</div>
     </div>
+
+    <!-- 메모 표시 -->
+    <div class="detail-center__item">
+      📢
+      <span class="detail-center__highlight detail-center__highlight--content"
+        >"{{ transactionData.content }}"</span
+      >
+      메모를 남기셨어요
+    </div>
+
+    <!-- 수정 모달 -->
+    <MoneyEditModal
+      :isOpen="isEditModalOpen"
+      :initialData="transactionData"
+      @close="closeEditModal"
+      @submit="handleEditSubmit"
+    />
   </div>
 </template>
 
 <script setup>
-import { computed } from 'vue'
+import { ref } from 'vue'
+import { useRouter } from 'vue-router'
+import axios from 'axios' // axios 임포트 추가
+import MoneyEditModal from './MoneyEditModal.vue' // 모달 컴포넌트 임포트
 
-// category는 name과 code를 포함한 객체
+const API_URL = 'http://localhost:5500/transactions'
+const router = useRouter()
+
+// TransactionDetail.vue로부터 전달받는 상세 데이터
 const props = defineProps({
-  category: Object,
+  id: Number,
+  category: String,
   date: String,
-  memo: String,
+  content: String,
+  type: String, // 'income' 또는 'expense'
+  amount: Number, // 금액 prop 추가
+  transactionData: Object,
 })
 
-// 카테고리 아이콘 경로 생성
-const categoryIcon = computed(() => {
-  const fileName = props.category?.code
-  return new URL(`../assets/${fileName}.svg`, import.meta.url).href
-})
+const isEditModalOpen = ref(false) // 모달 열림 상태
 
-// 정적 아이콘 경로
-const calendarIcon = new URL('../assets/calender.svg', import.meta.url).href // 오타 calender 주의!
-const memoIcon = new URL('../assets/memo.svg', import.meta.url).href
+// 모달에 전달할 초기 데이터 객체 생성
+// const transactionData = computed(() => ({
+//   id: props.id,
+//   amount: props.amount,
+//   date: props.date,
+//   content: props.content,
+//   category: props.category,
+//   type: props.type,
+// }))
+
+const openEditModal = () => {
+  isEditModalOpen.value = true
+}
+
+const closeEditModal = () => {
+  isEditModalOpen.value = false
+}
+
+const handleEditSubmit = async formData => {
+  try {
+    const response = await axios.put(
+      `http://localhost:5500/transactions/${props.id}`,
+      {
+        ...formData, // 모달에서 받은 데이터
+        id: props.id, // ID는 props에서 가져옴
+      },
+    )
+
+    // axios는 성공 시 2xx 상태 코드를 반환합니다.
+    if (response.status >= 200 && response.status < 300) {
+      // console.log('수정 성공')
+      closeEditModal()
+      router.go(0) // 현재 페이지 새로고침
+    } else {
+      // axios는 2xx 외의 상태 코드에서 에러를 발생시키므로, 이 부분은 보통 catch 블록에서 처리됩니다.
+      // 하지만 만약을 위해 남겨둘 수 있습니다.
+      console.error('수정 실패 - 상태 코드:', response.status)
+    }
+  } catch (error) {
+    console.error(
+      '수정 중 오류 발생:',
+      error.response ? error.response.data : error.message,
+    )
+  }
+}
+
+// 닫기 버튼 클릭 시 실행될 함수
+const backList = () => {
+  const date = props.transactionData.date
+  const year = new Date(date).getFullYear()
+  const month = String(new Date(date).getMonth() + 1)
+  router.push(`/list/${year}/${month}`)
+}
+
+// 해당 거래내역 삭제 함수
+const deleteTransaction = async () => {
+  let isDelete = false
+  if (!props.transactionData.id) {
+    console.error('삭제할 거래의 ID가 없습니다.')
+    return
+  } else {
+    isDelete = confirm('삭제하시겠습니까?')
+    if (isDelete) {
+      try {
+        const date = props.transactionData.date
+        const year = new Date(date).getFullYear()
+        const month = String(new Date(date).getMonth() + 1)
+        const response = await axios.delete(`${API_URL}/${props.id}`)
+        if (response.status === 200 || response.status === 204) {
+          // 삭제 성공 시 목록 페이지로 이동
+          router.push(`/list/${year}/${month}`)
+        } else {
+          console.error('삭제 실패 - 상태 코드:', response.status)
+        }
+      } catch (error) {
+        console.error('삭제 중 오류 발생:', error)
+      }
+    }
+  }
+}
 </script>
 
 <style scoped>
 .detail-center {
   position: relative;
-  background-color: white;
-  border-radius: 28px;
+  background-color: #ffffff;
   padding: 64px 60px;
-  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.08);
+  border-radius: 28px;
+
   width: 100%;
-  max-width: 1100px;
+  max-width: 1200px;
+  min-height: 400px;
   margin: 0 auto;
+
+  font-size: 28px;
+  line-height: 1.9;
   display: flex;
   flex-direction: column;
   gap: 48px;
-  font-size: 28px;
   font-weight: bold;
-  line-height: 1.8;
 }
 
 .detail-center__item {
   display: flex;
-  align-items: center;
-  gap: 16px;
+  align-items: flex-start;
+  gap: 12px;
   word-break: keep-all;
-}
-
-.detail-center__icon {
-  width: 80px;
-  height: 80px;
-  object-fit: contain;
-  flex-shrink: 0;
+  line-height: 1.7;
 }
 
 .detail-center__highlight {
@@ -93,25 +199,65 @@ const memoIcon = new URL('../assets/memo.svg', import.meta.url).href
   margin: 0 8px;
 }
 
-.detail-center__highlight-category {
+.detail-center__highlight--category {
   color: var(--point-color);
 }
-.detail-center__highlight-date {
+.detail-center__highlight--date {
   color: var(--blue);
 }
-.detail-center__highlight-memo {
+.detail-center__highlight--content {
   color: var(--green-500);
 }
 
-.detail-center__close {
+.detail-center__button-group {
   position: absolute;
   top: 24px;
   right: 24px;
-  background-color: white;
-  border: 1px solid #ddd;
+  display: flex;
+  gap: 10px;
+}
+
+.detail-center__btn {
+  background: white;
+  border: 1px solid var(--gray-300);
   border-radius: 8px;
   padding: 6px 14px;
-  font-size: 14px;
+  font-size: 13px;
+  font-weight: 500;
   cursor: pointer;
+}
+
+.detail-center__btn:hover {
+  background: var(--gray-100);
+}
+
+.detail-center__edit {
+  background-color: #ffc107;
+  color: white;
+  border: none;
+}
+
+.detail-center__edit:hover {
+  background-color: #ffb300;
+}
+
+.detail-center__delete {
+  background-color: #dc3545;
+  color: white;
+  border: none;
+}
+
+.detail-center__delete:hover {
+  background-color: #c82333;
+}
+
+.detail-center__close {
+  background-color: #6c757d;
+  color: white;
+  border: none;
+}
+
+.detail-center__close:hover {
+  background-color: #5a6268;
 }
 </style>

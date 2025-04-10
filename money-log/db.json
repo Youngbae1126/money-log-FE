@@ -1,7 +1,7 @@
 {
   "user": {
     "id": 1,
-    "nickname": "나",
+    "nickname": "기차타는 고양이",
     "icon": "👨‍💻"
   },
   "log": {
@@ -30,11 +30,11 @@
   "goal": {
     "month": "2025-04",
     "currentExpense": 100000,
-    "targetExpense": 500
+    "targetExpense": 300000
   },
   "transactions": [
     {
-      "id": 1,
+      "id": "1",
       "type": "expense",
       "category": "술-유흥",
       "code": "drink",
@@ -43,7 +43,7 @@
       "amount": 73158
     },
     {
-      "id": 2,
+      "id": "2",
       "type": "income",
       "category": "계좌이체",
       "code": "atm",
@@ -52,16 +52,16 @@
       "amount": 7856
     },
     {
-      "id": 3,
-      "type": "expense",
-      "category": "술-유흥",
-      "code": "drink",
-      "content": "옷 구매",
+      "amount": 151692,
       "date": "2025-01-13",
-      "amount": 151692
+      "content": "옷 구매",
+      "category": "쇼핑",
+      "code": "shopping",
+      "type": "expense",
+      "id": "3"
     },
     {
-      "id": 4,
+      "id": "4",
       "type": "income",
       "category": "계좌이체",
       "code": "atm",
@@ -70,7 +70,7 @@
       "amount": 54487
     },
     {
-      "id": 5,
+      "id": "5",
       "type": "expense",
       "category": "보험-세금",
       "code": "tax",
@@ -79,43 +79,34 @@
       "amount": 43713
     },
     {
-      "id": 6,
-      "type": "expense",
-      "category": "술-유흥",
-      "code": "drink",
-      "content": "점심 식사",
-      "date": "2025-02-27",
-      "amount": 99711
-    },
-    {
-      "id": 7,
-      "type": "income",
-      "category": "용돈",
-      "code": "money",
-      "content": "급여",
+      "amount": 1460000,
       "date": "2025-02-16",
-      "amount": 14600
+      "content": "급여",
+      "category": "용돈-월급",
+      "code": "money",
+      "type": "income",
+      "id": "7"
     },
     {
-      "id": 8,
-      "type": "expense",
+      "amount": 129074,
+      "date": "2025-02-17",
+      "content": "레이어드 펌",
       "category": "미용",
       "code": "beauty",
-      "content": "점심 식사",
-      "date": "2025-02-17",
-      "amount": 129074
+      "type": "expense",
+      "id": "8"
     },
     {
-      "id": 9,
-      "type": "expense",
+      "amount": 44900,
+      "date": "2025-02-06",
+      "content": "어항 꾸미기",
       "category": "취미-여가",
       "code": "hobby",
-      "content": "결혼식",
-      "date": "2025-02-06",
-      "amount": 44932
+      "type": "expense",
+      "id": "9"
     },
     {
-      "id": 10,
+      "id": "10",
       "type": "expense",
       "category": "식비",
       "code": "eat",
@@ -124,16 +115,16 @@
       "amount": 151769
     },
     {
-      "id": 11,
-      "type": "expense",
-      "category": "경조사",
-      "code": "event",
-      "content": "보험료",
+      "amount": 182885,
       "date": "2025-03-17",
-      "amount": 182885
+      "content": "보험료",
+      "category": "보험-세금",
+      "code": "tax",
+      "type": "expense",
+      "id": "11"
     },
     {
-      "id": 12,
+      "id": "12",
       "type": "expense",
       "category": "술-유흥",
       "code": "drink",
@@ -142,25 +133,16 @@
       "amount": 166585
     },
     {
-      "id": 13,
+      "id": "13",
       "type": "income",
       "category": "계좌이체",
       "code": "atm",
-      "content": "용돈",
+      "content": "용돈-월급",
       "date": "2025-03-15",
       "amount": 38187
     },
     {
-      "id": 14,
-      "type": "expense",
-      "category": "교통-자동차",
-      "code": "car",
-      "content": "편의점",
-      "date": "2025-03-17",
-      "amount": 150627
-    },
-    {
-      "id": 15,
+      "id": "15",
       "type": "expense",
       "category": "미용",
       "code": "beauty",
@@ -169,34 +151,25 @@
       "amount": 70000
     },
     {
-      "id": 16,
+      "amount": 30000,
+      "date": "2025-04-10",
+      "content": "엄마랑 맛있는 밥 먹음!",
+      "category": "식비",
+      "code": "eat",
       "type": "expense",
-      "category": "보험-세금",
-      "code": "tax",
-      "content": "카페",
-      "date": "2025-04-03",
-      "amount": 47686
+      "id": "16"
     },
     {
-      "id": 17,
-      "type": "expense",
+      "amount": 64000,
+      "date": "2025-04-05",
+      "content": "생일파티 준비",
       "category": "경조사",
       "code": "event",
-      "content": "옷 구매",
-      "date": "2025-04-05",
-      "amount": 64417
-    },
-    {
-      "id": 18,
       "type": "expense",
-      "category": "의료-건강",
-      "code": "medical",
-      "content": "지하철",
-      "date": "2025-04-02",
-      "amount": 53823
+      "id": "17"
     },
     {
-      "id": 19,
+      "id": "19",
       "type": "expense",
       "category": "편의점-마트-잡화",
       "code": "market",
@@ -205,16 +178,16 @@
       "amount": 158493
     },
     {
-      "id": 20,
-      "type": "expense",
-      "category": "교육",
-      "code": "edu",
-      "content": "영화관",
+      "amount": 130000,
       "date": "2025-04-07",
-      "amount": 135572
+      "content": "영화관",
+      "category": "용돈-월급",
+      "code": "money",
+      "type": "income",
+      "id": "20"
     },
     {
-      "id": 21,
+      "id": "21",
       "type": "expense",
       "category": "교육",
       "code": "edu",
@@ -223,25 +196,16 @@
       "amount": 94391
     },
     {
-      "id": 22,
-      "type": "expense",
-      "category": "교통-자동차",
-      "code": "car",
-      "content": "편의점",
+      "amount": 900000,
       "date": "2025-05-19",
-      "amount": 94965
+      "content": "편의점 알바비 입금",
+      "category": "용돈-월급",
+      "code": "money",
+      "type": "income",
+      "id": "22"
     },
     {
-      "id": 23,
-      "type": "expense",
-      "category": "편의점-마트-잡화",
-      "code": "market",
-      "content": "기름값",
-      "date": "2025-05-20",
-      "amount": 102179
-    },
-    {
-      "id": 24,
+      "id": "24",
       "type": "expense",
       "category": "교육",
       "code": "edu",
@@ -250,7 +214,7 @@
       "amount": 54819
     },
     {
-      "id": 25,
+      "id": "25",
       "type": "expense",
       "category": "쇼핑",
       "code": "shopping",
@@ -259,7 +223,7 @@
       "amount": 180856
     },
     {
-      "id": 26,
+      "id": "26",
       "type": "expense",
       "category": "의료-건강",
       "code": "medical",
@@ -268,7 +232,7 @@
       "amount": 70752
     },
     {
-      "id": 27,
+      "id": "27",
       "type": "expense",
       "category": "편의점-마트-잡화",
       "code": "market",
@@ -277,16 +241,16 @@
       "amount": 150925
     },
     {
-      "id": 28,
-      "type": "income",
-      "category": "계좌이체",
-      "code": "atm",
-      "content": "급여",
+      "amount": 529080,
       "date": "2025-06-21",
-      "amount": 52908
+      "content": "급여",
+      "category": "용돈-월급",
+      "code": "money",
+      "type": "income",
+      "id": "28"
     },
     {
-      "id": 29,
+      "id": "29",
       "type": "expense",
       "category": "미용",
       "code": "beauty",
@@ -295,7 +259,7 @@
       "amount": 111061
     },
     {
-      "id": 30,
+      "id": "30",
       "type": "expense",
       "category": "미용",
       "code": "beauty",
@@ -304,7 +268,7 @@
       "amount": 163886
     },
     {
-      "id": 31,
+      "id": "31",
       "type": "expense",
       "category": "교육",
       "code": "edu",
@@ -313,7 +277,7 @@
       "amount": 14604
     },
     {
-      "id": 32,
+      "id": "32",
       "type": "expense",
       "category": "취미-여가",
       "code": "hobby",
@@ -322,7 +286,7 @@
       "amount": 192323
     },
     {
-      "id": 33,
+      "id": "33",
       "type": "expense",
       "category": "식비",
       "code": "eat",
@@ -331,7 +295,7 @@
       "amount": 101697
     },
     {
-      "id": 34,
+      "id": "34",
       "type": "expense",
       "category": "쇼핑",
       "code": "shopping",
@@ -340,7 +304,7 @@
       "amount": 127247
     },
     {
-      "id": 35,
+      "id": "35",
       "type": "expense",
       "category": "교통-자동차",
       "code": "car",
@@ -349,7 +313,7 @@
       "amount": 168140
     },
     {
-      "id": 36,
+      "id": "36",
       "type": "expense",
       "category": "교통-자동차",
       "code": "car",
@@ -358,16 +322,16 @@
       "amount": 178911
     },
     {
-      "id": 37,
-      "type": "income",
-      "category": "용돈",
-      "code": "money",
-      "content": "환불",
+      "amount": 670000,
       "date": "2025-08-02",
-      "amount": 67647
+      "content": "알바 월급",
+      "category": "용돈-월급",
+      "code": "money",
+      "type": "income",
+      "id": "37"
     },
     {
-      "id": 38,
+      "id": "38",
       "type": "expense",
       "category": "미용",
       "code": "beauty",
@@ -376,7 +340,7 @@
       "amount": 130625
     },
     {
-      "id": 39,
+      "id": "39",
       "type": "expense",
       "category": "경조사",
       "code": "event",
@@ -385,7 +349,7 @@
       "amount": 77154
     },
     {
-      "id": 40,
+      "id": "40",
       "type": "expense",
       "category": "쇼핑",
       "code": "shopping",
@@ -394,16 +358,16 @@
       "amount": 106291
     },
     {
-      "id": 41,
+      "id": "41",
       "type": "income",
       "category": "계좌이체",
       "code": "atm",
-      "content": "용돈",
+      "content": "용돈-월급",
       "date": "2025-09-28",
       "amount": 11981
     },
     {
-      "id": 42,
+      "id": "42",
       "type": "income",
       "category": "계좌이체",
       "code": "atm",
@@ -412,7 +376,7 @@
       "amount": 70362
     },
     {
-      "id": 43,
+      "id": "43",
       "type": "expense",
       "category": "보험-세금",
       "code": "tax",
@@ -421,7 +385,7 @@
       "amount": 40148
     },
     {
-      "id": 44,
+      "id": "44",
       "type": "expense",
       "category": "식비",
       "code": "eat",
@@ -430,25 +394,16 @@
       "amount": 94560
     },
     {
-      "id": 45,
-      "type": "expense",
-      "category": "교통-자동차",
-      "code": "car",
-      "content": "편의점",
-      "date": "2025-09-20",
-      "amount": 140723
-    },
-    {
-      "id": 46,
-      "type": "expense",
+      "amount": 170741,
+      "date": "2025-10-03",
+      "content": "강아지 병원비",
       "category": "의료-건강",
       "code": "medical",
-      "content": "기름값",
-      "date": "2025-10-03",
-      "amount": 170741
+      "type": "expense",
+      "id": "46"
     },
     {
-      "id": 47,
+      "id": "47",
       "type": "expense",
       "category": "미용",
       "code": "beauty",
@@ -457,34 +412,16 @@
       "amount": 187363
     },
     {
-      "id": 48,
-      "type": "expense",
-      "category": "의료-건강",
-      "code": "medical",
-      "content": "영화관",
-      "date": "2025-10-16",
-      "amount": 89873
-    },
-    {
-      "id": 49,
-      "type": "expense",
-      "category": "카페-간식",
-      "code": "cafe",
-      "content": "술자리",
+      "amount": 49000,
       "date": "2025-10-13",
-      "amount": 149044
-    },
-    {
-      "id": 50,
+      "content": "술자리",
+      "category": "술-유흥",
+      "code": "drink",
       "type": "expense",
-      "category": "식비",
-      "code": "eat",
-      "content": "넷플릭스",
-      "date": "2025-10-16",
-      "amount": 44231
+      "id": "49"
     },
     {
-      "id": 51,
+      "id": "51",
       "type": "expense",
       "category": "취미-여가",
       "code": "hobby",
@@ -493,7 +430,7 @@
       "amount": 195450
     },
     {
-      "id": 52,
+      "id": "52",
       "type": "income",
       "category": "계좌이체",
       "code": "atm",
@@ -502,7 +439,7 @@
       "amount": 186972
     },
     {
-      "id": 53,
+      "id": "53",
       "type": "expense",
       "category": "취미-여가",
       "code": "hobby",
@@ -511,16 +448,16 @@
       "amount": 29144
     },
     {
-      "id": 54,
+      "id": "54",
       "type": "income",
-      "category": "용돈",
+      "category": "용돈-월급",
       "code": "money",
       "content": "세뱃돈",
       "date": "2025-11-28",
       "amount": 61486
     },
     {
-      "id": 55,
+      "id": "55",
       "type": "expense",
       "category": "경조사",
       "code": "event",
@@ -529,7 +466,7 @@
       "amount": 23031
     },
     {
-      "id": 56,
+      "id": "56",
       "type": "expense",
       "category": "취미-여가",
       "code": "hobby",
@@ -538,7 +475,7 @@
       "amount": 135694
     },
     {
-      "id": 57,
+      "id": "57",
       "type": "expense",
       "category": "의료-건강",
       "code": "medical",
@@ -547,7 +484,7 @@
       "amount": 89541
     },
     {
-      "id": 58,
+      "id": "58",
       "type": "expense",
       "category": "보험-세금",
       "code": "tax",
@@ -556,7 +493,7 @@
       "amount": 28410
     },
     {
-      "id": 59,
+      "id": "59",
       "type": "expense",
       "category": "식비",
       "code": "eat",
@@ -565,7 +502,7 @@
       "amount": 46902
     },
     {
-      "id": 60,
+      "id": "60",
       "type": "expense",
       "category": "취미-여가",
       "code": "hobby",
@@ -574,9 +511,10 @@
       "amount": 112824
     },
     {
-      "id": 61,
+      "id": "61",
       "type": "income",
-      "category": "용돈",
+      "category": "용돈-월급",
+      "code": "money",
       "content": "드디어 알바비 입금!!!",
       "date": "2025-04-15",
       "amount": 1000000
@@ -584,77 +522,77 @@
   ],
   "categories": [
     {
-      "id": 1,
+      "id": "1",
       "name": "식비",
       "code": "eat"
     },
     {
-      "id": 2,
+      "id": "2",
       "name": "편의점-마트-잡화",
       "code": "market"
     },
     {
-      "id": 3,
-      "name": "용돈",
+      "id": "3",
+      "name": "용돈-월급",
       "code": "money"
     },
     {
-      "id": 4,
+      "id": "4",
       "name": "쇼핑",
       "code": "shopping"
     },
     {
-      "id": 5,
+      "id": "5",
       "name": "술-유흥",
       "code": "drink"
     },
     {
-      "id": 6,
+      "id": "6",
       "name": "카페-간식",
       "code": "cafe"
     },
     {
-      "id": 7,
+      "id": "7",
       "name": "의료-건강",
       "code": "medical"
     },
     {
-      "id": 8,
+      "id": "8",
       "name": "취미-여가",
       "code": "hobby"
     },
     {
-      "id": 9,
+      "id": "9",
       "name": "보험-세금",
       "code": "tax"
     },
     {
-      "id": 10,
+      "id": "10",
       "name": "교통-자동차",
       "code": "car"
     },
     {
-      "id": 11,
+      "id": "11",
       "name": "여행-숙박",
       "code": "trip"
     },
     {
-      "id": 12,
+      "id": "12",
       "name": "교육",
       "code": "edu"
     },
     {
-      "id": 13,
+      "id": "13",
       "name": "계좌이체",
       "code": "atm"
     },
     {
-      "id": 14,
+      "id": "14",
       "name": "미용",
       "code": "beauty"
     },
     {
-      "id": 15,
+      "id": "15",
       "name": "경조사",
       "code": "event"
     }

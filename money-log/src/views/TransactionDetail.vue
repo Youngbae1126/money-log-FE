@@ -1,66 +1,61 @@
-<script>
+<script setup>
 import { ref, onMounted } from 'vue'
 import { useRoute } from 'vue-router'
 import axios from 'axios'
-
 import DetailBackground from '@/components/DetailBackground.vue'
 import DetailCenter from '@/components/DetailCenter.vue'
 
-export default {
-  components: {
-    DetailBackground,
-    DetailCenter,
-  },
-  setup() {
-    const route = useRoute()
-    const transactionId = route.params.id
+const route = useRoute()
+const transactionId = route.params.id
 
-    const user = ref('홍길동')
-    const amount = ref(0)
-    const category = ref('')
-    const date = ref('')
-    const memo = ref('')
+// 거래 내역 데이터를 담을 변수
+const user = ref('')
+const amount = ref(0)
+const category = ref('')
+const date = ref('')
+const content = ref('')
+const type = ref('') // 'income' 또는 'expense'
 
-    onMounted(async () => {
-      try {
-        const res = await axios.get(
-          `http://localhost:5500/transactions/${transactionId}`,
-        )
-        const data = res.data
-
-        amount.value = data.amount
-        category.value = data.category
-        date.value = data.date
-        memo.value = data.content
-      } catch (error) {
-        console.error('데이터 불러오기 실패:', error)
-      }
-    })
-
-    return { user, amount, category, date, memo }
-  },
-}
+const transactionData = ref({})
+// 페이지가 마운트될 때 URL에 있는 id의 거래 내역 데이터를 불러 옴
+const API_URL = 'http://localhost:5500/transactions'
+onMounted(async () => {
+  // 스크롤을 맨 위로 이동
+  window.scrollTo(0, 0)
+  try {
+    const res = await axios.get(`${API_URL}/${transactionId}`)
+    transactionData.value = res.data
+  } catch (error) {
+    console.log('데이터 요청 실패: ', error)
+  }
+})
 </script>
 
 <template>
   <div class="transaction-detail">
-    <DetailBackground :userName="user" :amount="amount">
-      <DetailCenter :category="category" :date="date" :memo="memo" />
+    <DetailBackground
+      :userName="user"
+      :amount="amount"
+      :type="type"
+      :date="date"
+      :transactionData="transactionData"
+    >
+      <DetailCenter
+        :category="category"
+        :date="date"
+        :content="content"
+        :type="type"
+        :id="Number(transactionId)"
+        :amount="amount"
+        :transactionData="transactionData"
+      />
     </DetailBackground>
   </div>
 </template>
 
 <style scoped>
 .transaction-detail {
-  min-height: 100vh;
-  padding: 64px 48px;
-  background-image: url('@/assets/detail-background-color.svg');
-  background-size: cover;
-  background-repeat: no-repeat;
-  background-position: center;
   position: relative;
-  z-index: -1;
-  margin-top: -80px;
-  padding-top: 48px;
+  max-height: 630px;
 }
 </style>

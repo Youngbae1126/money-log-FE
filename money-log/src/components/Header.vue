@@ -25,7 +25,7 @@ onMounted(() => {
       </RouterLink>
       <h1>
         <RouterLink to="/"
-          ><img src="../assets/logo.svg" alt="로고"
+          ><img src="../assets/logo.svg" alt="로고" class="logo"
         /></RouterLink>
       </h1>
     </div>
@@ -33,9 +33,11 @@ onMounted(() => {
 </template>
 
 <style scoped>
-.header {
-  padding: 0.8rem;
+header {
+  /* padding: 0.8rem; */
   background-color: transparent;
+  margin: 0;
+  z-index: 1000;
 }
 .header {
   max-width: 1920px;
@@ -51,15 +53,22 @@ onMounted(() => {
   align-items: center;
   text-align: center;
   gap: 0.3rem;
-  font-size: 1.3rem;
+  font-size: 1rem;
 }
 .profile__icon {
-  width: 40px;
-  height: 40px;
+  width: 30px;
+  height: 30px;
+  margin-left: 1rem;
 }
 .nickname__text {
   color: var(--main-color);
   font-weight: bold;
-  font-size: 1.35rem;
+  font-size: 1rem;
+}
+
+.logo {
+  width: 80px;
+  height: 80px;
+  margin-right: 1rem;
 }
 </style>

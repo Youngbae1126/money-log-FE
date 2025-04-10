@@ -77,7 +77,7 @@
       <!-- 버튼 그룹 -->
       <div class="button-group">
         <button class="cancel-btn" @click="closeModal">취소</button>
-        <button class="submit-btn" @click="submitForm">저장</button>
+        <button class="submit-btn" @click="submitForm">수정</button>
       </div>
     </div>
   </div>
@@ -88,11 +88,15 @@ import axios from 'axios'
 import { addIconsToCategories, getCategoryIcon } from '@/stores/categoryIcons'
 
 export default {
-  name: 'MoneyInputModal',
+  name: 'MoneyEditModal',
   props: {
     isOpen: {
       type: Boolean,
       default: false,
+    },
+    initialData: {
+      type: Object,
+      default: () => ({}),
     },
   },
   data() {
@@ -101,12 +105,20 @@ export default {
       formattedAmount: '',
       date: new Date().toISOString().split('T')[0],
       content: '',
-      code: '',
       category: '',
       isIncome: false,
       categories: [],
       selectedCategoryIcon: null,
     }
+  },
+  watch: {
+    isOpen(newVal) {
+      if (newVal) {
+        this.loadInitialData()
+      } else {
+        this.resetForm()
+      }
+    },
   },
   async created() {
     try {
@@ -123,7 +135,22 @@ export default {
     }
   },
   methods: {
-    // 선택된 카테고리의 아이콘 업데이트
+    loadInitialData() {
+      if (this.initialData && Object.keys(this.initialData).length > 0) {
+        this.amount = String(this.initialData.amount || '')
+        this.formattedAmount = this.initialData.amount
+          ? Number(this.initialData.amount).toLocaleString('ko-KR')
+          : ''
+        this.date =
+          this.initialData.date || new Date().toISOString().split('T')[0]
+        this.content = this.initialData.content || ''
+        this.category = this.initialData.category || ''
+        this.isIncome = this.initialData.type === 'income'
+        this.updateSelectedCategory()
+      } else {
+        this.resetForm()
+      }
+    },
     updateSelectedCategory() {
       const selectedCategory = this.categories.find(
         cat => cat.name === this.category,
@@ -133,10 +160,8 @@ export default {
       }
     },
     closeModal() {
-      this.resetForm()
       this.$emit('close')
     },
-    // 금액 입력 시 유효성 검사
     handleAmountInput(event) {
       // 숫자가 아닌 모든 문자 제거
       const value = event.target.value.replace(/[^0-9]/g, '')
@@ -157,19 +182,28 @@ export default {
       this.formattedAmount = ''
       this.date = new Date().toISOString().split('T')[0]
       this.content = ''
-      this.code = ''
       this.category = this.categories.length > 0 ? this.categories[0].name : ''
       this.isIncome = false
       this.updateSelectedCategory()
     },
     submitForm() {
+      const selectedCategory = this.categories.find(
+        cat => cat.name === this.category,
+      )
+      const code = selectedCategory ? selectedCategory.code : null
+
+      if (!code) {
+        console.error('선택된 카테고리에 해당하는 코드를 찾을 수 없습니다.')
+        return
+      }
+
       const formData = {
-        amount: this.amount,
+        amount: Number(this.amount),
         date: this.date,
         content: this.content,
-        code: this.code,
         category: this.category,
-        isIncome: this.isIncome,
+        code: code,
+        type: this.isIncome ? 'income' : 'expense',
       }
       this.$emit('submit', formData)
       this.closeModal()

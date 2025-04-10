@@ -1,84 +1,126 @@
+<script setup>
+import { computed, onMounted, ref, watch } from 'vue'
+import { useTransactionStore } from '@/stores/transactionStore'
+import { useCategoryStore } from '@/stores/categoryIcons.js'
+
+const transactionStore = useTransactionStore()
+// 카테고리 스토어
+const categoryStore = useCategoryStore()
+
+const selectedCategory = ref('')
+const type = ref('전체')
+const isIncomeClick = ref(false)
+const isExpenseClick = ref(false)
+const isCategoryClick = ref(true)
+
+const props = defineProps({
+  selectedMonth: String,
+  currentMonth: Number,
+  currentYear: Number,
+})
+
+// selectedMonth를 computed로 다시 구성해서 내부 반응형 유지
+const selectedMonth = computed(
+  () =>
+    `${props.currentYear}-${props.currentMonth.toString().padStart(2, '0')}`,
+)
+
+function onClickIncome(month) {
+  // console.log('income month:', month)
+  isIncomeClick.value = !isIncomeClick.value
+  if (isIncomeClick.value) {
+    type.value = '수입'
+    transactionStore.filterMonthIncome(month)
+  } else {
+    type.value = '전체'
+    transactionStore.getTransactionInfo(month)
+  }
+}
+function onClickExpense(month) {
+  // console.log('expense month:', month)
+  isExpenseClick.value = !isExpenseClick.value
+  if (isExpenseClick.value) {
+    type.value = '지출'
+    transactionStore.filterMonthExpense(month)
+  } else {
+    type.value = '전체'
+    transactionStore.getTransactionInfo(month)
+  }
+}
+function onClickCategory(month, code) {
+  // console.log('ctg month:', month)
+  isExpenseClick.value = !isExpenseClick.value
+  if (isCategoryClick.value) {
+    // 카테고리 필터링된 리스트만 불러옴.
+    transactionStore.filterCategoryList(month, code)
+  } else {
+    transactionStore.getTransactionInfo(month)
+  }
+}
+
+watch(
+  () => props.selectedMonth,
+  newVal => {
+    // 월이 변경되었을 때 수입 필터 초기화
+    if (isIncomeClick.value) {
+      isIncomeClick.value = false
+      type.value = '전체'
+      transactionStore.getTransactionInfo(newVal)
+    }
+  },
+)
+
+onMounted(() => {
+  type.value = false
+  categoryStore.getCategoryInfo()
+})
+</script>
+
 <template>
   <div>
     <!-- 필터 UI -->
     <div class="filter-container">
       <!-- 날짜 -->
-      <div class="filter-box">
+      <!-- <div class="filter-box">
         <span>일자</span>
-        <input type="date" v-model="selectedDate" />
-      </div>
+        <input type="date" v-model="selectedMonth" />
+      </div> -->
 
       <!-- 카테고리 -->
       <div class="filter-box">
         <span>카테고리</span>
-        <select v-model="selectedCategory">
-          <option></option>
-          <option>식비</option>
-          <option>교통</option>
-          <option>쇼핑</option>
-          <option>기타</option>
+        <select
+          v-model="selectedCategory"
+          @change="onClickCategory(selectedMonth, selectedCategory.code)"
+        >
+          <option
+            v-for="(category, index) in categoryStore.categoryData"
+            :key="index"
+            :value="category"
+            :code="category.code"
+          >
+            {{ category.name }}
+          </option>
         </select>
       </div>
 
-      <!-- 수입/지출 -->
       <button
         class="filter-btn"
         :class="{ active: type === '수입' }"
-        @click="type = '수입'"
+        @click="onClickIncome(selectedMonth)"
       >
         수입
       </button>
       <button
         class="filter-btn"
         :class="{ active: type === '지출' }"
-        @click="type = '지출'"
+        @click="onClickExpense(selectedMonth)"
       >
         지출
       </button>
     </div>
   </div>
 </template>
-
-<script>
-export default {
-  name: 'CalendarFilter',
-  data() {
-    return {
-      currentMonth: 3,
-      currentYear: 2025,
-      selectedDate: '2025-04-02',
-      selectedCategory: '',
-      type: '',
-      monthNames: [
-        '1월',
-        '2월',
-        '3월',
-        '4월',
-        '5월',
-        '6월',
-        '7월',
-        '8월',
-        '9월',
-        '10월',
-        '11월',
-        '12월',
-      ],
-    }
-  },
-  methods: {
-    prevMonth() {
-      const date = new Date(this.currentYear, this.currentMonth - 1)
-      this.currentMonth = date.getMonth()
-      this.currentYear = date.getFullYear()
-    },
-    nextMonth() {
-      const date = new Date(this.currentYear, this.currentMonth + 1)
-      this.currentMonth = date.getMonth()
-      this.currentYear = date.getFullYear()
-    },
-  },
-}
-</script>
 
 <style scoped>
 body {
@@ -166,6 +208,9 @@ body {
   justify-content: center;
   gap: 12px;
   flex-wrap: wrap;
+
+  position: relative;
+  top: -50px;
 }
 
 .filter-box {
