@@ -99,15 +99,6 @@ defineProps({
 }
 
 .transaction-detail__pig {
-  /* position: absolute;
-  bottom: 0;
-  right: 0;
-  width: clamp(180px, 35vw, 400px);
-  height: auto;
-  z-index: 0;
-  pointer-events: none;
-  user-select: none;
-  top: 24rem; */
   position: absolute;
   top: 24rem;
   left: 65rem;

@@ -66,7 +66,7 @@
 </template>
 
 <script setup>
-import { ref, computed } from 'vue'
+import { ref } from 'vue'
 import { useRouter } from 'vue-router'
 import axios from 'axios' // axios 임포트 추가
 import MoneyEditModal from './MoneyEditModal.vue' // 모달 컴포넌트 임포트
@@ -143,8 +143,6 @@ const deleteTransaction = async () => {
     isDelete = confirm('삭제하시겠습니까?')
     if (isDelete) {
       try {
-        console.log('hihi:', props.transactionData.id)
-
         const response = await axios.delete(`${API_URL}/${props.id}`)
         if (response.status === 200 || response.status === 204) {
           // 삭제 성공 시 목록 페이지로 이동
