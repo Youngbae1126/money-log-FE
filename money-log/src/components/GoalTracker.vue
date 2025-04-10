@@ -1,5 +1,5 @@
 <script setup>
-import { onMounted } from 'vue'
+import { computed, onMounted } from 'vue'
 import { useGoalStore } from '@/stores/goal'
 import { useTransactionStore } from '@/stores/transactionStore'
 import DonutChart from './DonutChart.vue'
@@ -12,6 +12,14 @@ onMounted(() => {
   goalStore.getGoalInfo()
   transactionStore.getTransactionInfo()
 })
+
+// 현재 월 (YYYY-MM) 구하기
+const currentMonth = new Date().toISOString().slice(0, 7)
+
+// 해당 월의 지출 합계 계산
+const currentMonthExpense = computed(() =>
+  transactionStore.monthTotalExpense(currentMonth),
+)
 </script>
 
 <template>
@@ -30,7 +38,7 @@ onMounted(() => {
       <div class="label">
         <p class="label-name">현재까지의 소비</p>
         <span class="label-value nowspend">
-          {{ transactionStore.totalExpense.toLocaleString() }}원
+          {{ currentMonthExpense.toLocaleString() }}원
         </span>
       </div>
     </div>
