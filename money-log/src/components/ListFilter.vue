@@ -1,9 +1,27 @@
 <script setup>
 import { ref } from 'vue'
+import { useTransactionStore } from '@/stores/transactionStore'
 
-const currentMonth = ref(3)
-const currentYear = ref(2025)
-const selectedDate = ref('2025-04-02')
+const transactionStore = useTransactionStore()
+
+const props = defineProps({
+  currentMonth: String,
+  selectedDate: String,
+})
+
+function getMonthIncomeList(month) {
+  type.value = '수입'
+  transactionStore.getMonthIncomeTransaction(month)
+}
+
+function onClickIncome() {
+  console.log('실행')
+  transactionStore.filterMonthIncome(props.selectedDate)
+}
+
+// const currentMonth = ref(3)
+// const currentYear = ref(2025)
+const selectedDate = props.selectedDate
 const selectedCategory = ref('')
 const type = ref('')
 
@@ -47,10 +65,17 @@ const monthNames = [
       </div>
 
       <!-- 수입/지출 -->
-      <button
+      <!-- <button
         class="filter-btn"
         :class="{ active: type === '수입' }"
         @click="type = '수입'"
+      >
+        수입
+      </button> -->
+      <button
+        class="filter-btn"
+        :class="{ active: type === '수입' }"
+        @click="onClickIncome"
       >
         수입
       </button>

@@ -17,7 +17,7 @@ function prevMonth() {
   )
   currentMonth.value = (date.getMonth() + 1).toString().padStart(2, '0')
   currentYear.value = date.getFullYear().toString()
-  transactionStore.getMonthTransaction(
+  transactionStore.getTransactionInfo(
     `${currentYear.value}-${currentMonth.value}`,
   )
 }
@@ -27,7 +27,7 @@ function nextMonth() {
   const date = new Date(Number(currentYear.value), Number(currentMonth.value))
   currentMonth.value = (date.getMonth() + 1).toString().padStart(2, '0')
   currentYear.value = date.getFullYear().toString()
-  transactionStore.getMonthTransaction(
+  transactionStore.getTransactionInfo(
     `${currentYear.value}-${currentMonth.value}`,
   )
 }
@@ -55,7 +55,7 @@ onMounted(() => {
       : `${currMonth.getMonth() + 1}`
 
   const targetDate = `${currentYear.value}-${currentMonth.value}`
-  transactionStore.getMonthTransaction(targetDate)
+  transactionStore.getTransactionInfo(targetDate)
 })
 </script>
 
@@ -77,7 +77,7 @@ onMounted(() => {
         <div class="year">{{ currentYear }}</div>
         <div class="description">이번 달에는 이렇게 썼어요!</div>
       </div>
-      <ListFilter />
+      <ListFilter :currentMonth="currentMonth" :selectedMonth="selectedMonth" />
     </div>
 
     <!-- 리스트 -->
@@ -114,7 +114,7 @@ onMounted(() => {
           <!-- 여기 아래 부분 v-for문 돌리면 됩니다.-->
           <RouterLink to="/detail">
             <li
-              v-for="list in transactionStore.transactionData"
+              v-for="list in transactionStore.filteredTransactionData"
               :key="list.id"
               class="list-content"
             >
