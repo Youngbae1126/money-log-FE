@@ -90,7 +90,7 @@
     {
       "id": "7",
       "type": "income",
-      "category": "용돈",
+      "category": "용돈-월급",
       "code": "money",
       "content": "급여",
       "date": "2025-02-16",
@@ -146,7 +146,7 @@
       "type": "income",
       "category": "계좌이체",
       "code": "atm",
-      "content": "용돈",
+      "content": "용돈-월급",
       "date": "2025-03-15",
       "amount": 38187
     },
@@ -178,13 +178,13 @@
       "id": "16"
     },
     {
-      "id": "17",
-      "type": "expense",
+      "amount": 64000,
+      "date": "2025-04-05",
+      "content": "생일파티 준비",
       "category": "경조사",
       "code": "event",
-      "content": "옷 구매",
-      "date": "2025-04-05",
-      "amount": 64417
+      "type": "expense",
+      "id": "17"
     },
     {
       "id": "19",
@@ -196,13 +196,13 @@
       "amount": 158493
     },
     {
-      "id": "20",
-      "type": "expense",
-      "category": "교육",
-      "code": "edu",
-      "content": "영화관",
+      "amount": 130000,
       "date": "2025-04-07",
-      "amount": 135572
+      "content": "영화관",
+      "category": "용돈-월급",
+      "code": "money",
+      "type": "income",
+      "id": "20"
     },
     {
       "id": "21",
@@ -351,7 +351,7 @@
     {
       "id": "37",
       "type": "income",
-      "category": "용돈",
+      "category": "용돈-월급",
       "code": "money",
       "content": "환불",
       "date": "2025-08-02",
@@ -389,7 +389,7 @@
       "type": "income",
       "category": "계좌이체",
       "code": "atm",
-      "content": "용돈",
+      "content": "용돈-월급",
       "date": "2025-09-28",
       "amount": 11981
     },
@@ -504,7 +504,7 @@
     {
       "id": "54",
       "type": "income",
-      "category": "용돈",
+      "category": "용돈-월급",
       "code": "money",
       "content": "세뱃돈",
       "date": "2025-11-28",
@@ -567,7 +567,7 @@
     {
       "id": "61",
       "type": "income",
-      "category": "용돈",
+      "category": "용돈-월급",
       "code": "money",
       "content": "드디어 알바비 입금!!!",
       "date": "2025-04-15",
@@ -587,7 +587,7 @@
     },
     {
       "id": "3",
-      "name": "용돈",
+      "name": "용돈-월급",
       "code": "money"
     },
     {
