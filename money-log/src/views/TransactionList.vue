@@ -48,6 +48,9 @@ const selectedMonthExpense = computed(() =>
 )
 
 onMounted(() => {
+  // 스크롤을 맨 위로 이동
+  window.scrollTo(0, 0)
+
   const currMonth = new Date()
   currentMonth.value =
     currMonth.getMonth() < 10

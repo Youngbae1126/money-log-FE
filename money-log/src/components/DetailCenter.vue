@@ -20,7 +20,8 @@
         class="detail-center__highlight detail-center__highlight--category"
         >{{ category }}</span
       >
-      카테고리에 소비하셨어요
+      <template v-if="type === 'income'"> 카테고리로 들어온 돈이에요 </template>
+      <template v-else> 카테고리에 소비하셨어요 </template>
     </div>
 
     <!-- 날짜 표시 -->
@@ -29,17 +30,17 @@
       <span class="detail-center__highlight detail-center__highlight--date">{{
         date
       }}</span>
-      에 사용하셨어요
+      <template v-if="type === 'income'"> 에 들어온 돈이에요 </template>
+      <template v-else> 에 사용하셨어요 </template>
     </div>
 
     <!-- 메모 표시 -->
     <div class="detail-center__item">
       📢
-      <span
-        class="detail-center__highlight detail-center__highlight--content"
-        >{{ content }}</span
+      <span class="detail-center__highlight detail-center__highlight--content"
+        >"{{ content }}"</span
       >
-      이라는 메모를 남기셨네요
+      메모를 남기셨어요
     </div>
   </div>
 </template>
@@ -50,6 +51,7 @@ defineProps({
   category: String,
   date: String,
   content: String,
+  type: String, // 'income' 또는 'expense'
 })
 </script>
 
@@ -112,7 +114,6 @@ defineProps({
   font-size: 13px;
   font-weight: 500;
   cursor: pointer;
-  transition: all 0.3s ease;
 }
 
 .detail-center__btn:hover {

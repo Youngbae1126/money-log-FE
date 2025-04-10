@@ -14,6 +14,7 @@ const amount = ref(0)
 const category = ref('')
 const date = ref('')
 const content = ref('')
+const type = ref('') // 'income' 또는 'expense'
 
 // 페이지가 마운트될 때 거래 데이터를 API에서 불러 옴
 onMounted(async () => {
@@ -32,6 +33,7 @@ onMounted(async () => {
     category.value = data.category
     date.value = data.date
     content.value = data.content
+    type.value = data.type // type 데이터 추가
   } catch (error) {
     console.error('데이터를 불러오는 데 실패했습니다:', error)
   }
@@ -41,7 +43,12 @@ onMounted(async () => {
 <template>
   <div class="transaction-detail">
     <DetailBackground :userName="user" :amount="amount">
-      <DetailCenter :category="category" :date="date" :content="content" />
+      <DetailCenter
+        :category="category"
+        :date="date"
+        :content="content"
+        :type="type"
+      />
     </DetailBackground>
   </div>
 </template>
