@@ -42,7 +42,12 @@ onMounted(async () => {
 
 <template>
   <div class="transaction-detail">
-    <DetailBackground :userName="user" :amount="amount">
+    <DetailBackground
+      :userName="user"
+      :amount="amount"
+      :type="type"
+      :date="date"
+    >
       <DetailCenter
         :category="category"
         :date="date"
@@ -56,6 +61,6 @@ onMounted(async () => {
 <style scoped>
 .transaction-detail {
   position: relative;
-  overflow: hidden;
+  max-height: 630px;
 }
 </style>

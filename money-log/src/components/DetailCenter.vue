@@ -4,7 +4,13 @@
     <!-- 버튼 그룹 -->
     <div class="detail-center__button-group">
       <button class="detail-center__btn detail-center__edit">수정</button>
-      <button class="detail-center__btn detail-center__delete">삭제</button>
+
+      <button
+        class="detail-center__btn detail-center__delete"
+        @click="onClickDelete"
+      >
+        삭제
+      </button>
       <button
         class="detail-center__btn detail-center__close"
         @click="$router.back()"
@@ -20,8 +26,8 @@
         class="detail-center__highlight detail-center__highlight--category"
         >{{ category }}</span
       >
-      <template v-if="type === 'income'"> 카테고리로 들어온 돈이에요 </template>
-      <template v-else> 카테고리에 소비하셨어요 </template>
+      <div v-if="type === 'income'">카테고리로 들어온 돈이에요</div>
+      <div v-else>카테고리에 소비하셨어요</div>
     </div>
 
     <!-- 날짜 표시 -->
@@ -30,8 +36,8 @@
       <span class="detail-center__highlight detail-center__highlight--date">{{
         date
       }}</span>
-      <template v-if="type === 'income'"> 에 들어온 돈이에요 </template>
-      <template v-else> 에 사용하셨어요 </template>
+      <div v-if="type === 'income'">에 들어온 돈이에요</div>
+      <div v-else>에 사용하셨어요</div>
     </div>
 
     <!-- 메모 표시 -->
