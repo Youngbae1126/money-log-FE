@@ -9,6 +9,7 @@ import MostSpent from '@/components/MostSpent.vue'
   <div class="dashboard">
     <div class="dashboard__left-container">
       <MostSpent />
+      <hr />
       <GoalTracker />
     </div>
     <div class="dashboard__right-container">
@@ -21,18 +22,29 @@ import MostSpent from '@/components/MostSpent.vue'
 <style scoped>
 .dashboard {
   display: flex;
-  width: calc(100% - 2rem);
+  flex-wrap: wrap;
+  gap: 5rem;
+  /* width: calc(100% - 2rem); */
   max-width: 1920px;
-  margin: 1rem;
-  padding: 1rem;
-  padding-bottom: 5rem;
-  justify-content: space-between;
-  gap: 1rem;
+  /* margin: 2rem auto; */
+  /* margin-right: 2rem; */
+  padding: 1rem 2rem;
+  box-sizing: border-box;
+  /* justify-content: space-between; */
 }
 .dashboard__left-container {
-  flex-grow: 0.05;
+  /* flex-grow: 0.1; */
+  flex: 0 0 20%;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  margin-left: 1rem;
 }
 .dashboard__right-container {
-  flex-grow: 0.95;
+  /* flex-grow: 0.9; */
+  flex: 0 0 70%;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
 }
 </style>
