@@ -17,9 +17,12 @@ const memo = ref('')
 
 // 페이지가 마운트될 때 거래 데이터를 API에서 불러 옴
 onMounted(async () => {
+  // 스크롤을 맨 위로 이동
+  window.scrollTo(0, 0)
+
   try {
     const res = await axios.get(
-      `http://localhost:3001/transactions/${transactionId}`,
+      `http://localhost:5500/transactions/${transactionId}`,
     )
     const data = res.data
     amount.value = data.amount

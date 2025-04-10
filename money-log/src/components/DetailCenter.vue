@@ -1,8 +1,17 @@
 <!-- 상세페이지 흰색 카드 컴포넌트 -->
 <template>
   <div class="detail-center">
-    <!-- 닫기 버튼 (뒤로가기 기능) -->
-    <button class="detail-center__close" @click="$router.back()">닫기</button>
+    <!-- 버튼 그룹 -->
+    <div class="detail-center__button-group">
+      <button class="detail-center__btn detail-center__edit">수정</button>
+      <button class="detail-center__btn detail-center__delete">삭제</button>
+      <button
+        class="detail-center__btn detail-center__close"
+        @click="$router.back()"
+      >
+        닫기
+      </button>
+    </div>
 
     <!-- 카테고리 표시 -->
     <div class="detail-center__item">
@@ -86,10 +95,15 @@ defineProps({
   color: var(--green-500);
 }
 
-.detail-center__close {
+.detail-center__button-group {
   position: absolute;
   top: 24px;
   right: 24px;
+  display: flex;
+  gap: 10px;
+}
+
+.detail-center__btn {
   background: white;
   border: 1px solid var(--gray-300);
   border-radius: 8px;
@@ -97,5 +111,40 @@ defineProps({
   font-size: 13px;
   font-weight: 500;
   cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.detail-center__btn:hover {
+  background: var(--gray-100);
+}
+
+.detail-center__edit {
+  background-color: #ffc107;
+  color: white;
+  border: none;
+}
+
+.detail-center__edit:hover {
+  background-color: #ffb300;
+}
+
+.detail-center__delete {
+  background-color: #dc3545;
+  color: white;
+  border: none;
+}
+
+.detail-center__delete:hover {
+  background-color: #c82333;
+}
+
+.detail-center__close {
+  background-color: #6c757d;
+  color: white;
+  border: none;
+}
+
+.detail-center__close:hover {
+  background-color: #5a6268;
 }
 </style>
