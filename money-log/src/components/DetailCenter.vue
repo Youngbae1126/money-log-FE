@@ -35,9 +35,10 @@
     <!-- 메모 표시 -->
     <div class="detail-center__item">
       📢
-      <span class="detail-center__highlight detail-center__highlight--memo">{{
-        memo
-      }}</span>
+      <span
+        class="detail-center__highlight detail-center__highlight--content"
+        >{{ content }}</span
+      >
       이라는 메모를 남기셨네요
     </div>
   </div>
@@ -48,7 +49,7 @@
 defineProps({
   category: String,
   date: String,
-  memo: String,
+  content: String,
 })
 </script>
 

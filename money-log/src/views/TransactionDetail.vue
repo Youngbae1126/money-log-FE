@@ -13,7 +13,7 @@ const user = ref('')
 const amount = ref(0)
 const category = ref('')
 const date = ref('')
-const memo = ref('')
+const content = ref('')
 
 // 페이지가 마운트될 때 거래 데이터를 API에서 불러 옴
 onMounted(async () => {
@@ -28,7 +28,7 @@ onMounted(async () => {
     amount.value = data.amount
     category.value = data.category
     date.value = data.date
-    memo.value = data.content
+    content.value = data.content
   } catch (error) {
     console.error('데이터를 불러오는 데 실패했습니다:', error)
   }

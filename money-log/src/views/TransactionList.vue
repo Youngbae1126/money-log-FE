@@ -112,12 +112,12 @@ onMounted(() => {
           </li>
           <li class="list__line"></li>
           <!-- 여기 아래 부분 v-for문 돌리면 됩니다.-->
-          <RouterLink to="/detail">
-            <li
-              v-for="list in transactionStore.filteredTransactionData"
-              :key="list.id"
-              class="list-content"
-            >
+          <li
+            v-for="list in transactionStore.filteredTransactionData"
+            :key="list.id"
+            class="list-content"
+          >
+            <RouterLink :to="`/detail/${list.id}`" class="list-link">
               <div class="list-content__ctg">
                 <img :src="getCategoryIcon(list.code)" alt="아이콘" />
                 <div class="list-content__text">
@@ -127,8 +127,8 @@ onMounted(() => {
               </div>
               <div class="list-content__date">{{ list.date }}</div>
               <div class="list-content__memo">{{ list.content }}</div>
-            </li>
-          </RouterLink>
+            </RouterLink>
+          </li>
         </ul>
       </div>
     </div>
@@ -339,5 +339,13 @@ onMounted(() => {
   display: flex;
   align-items: center;
   flex-grow: 1;
+}
+.list-link {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  text-decoration: none;
+  color: inherit;
+  width: 100%;
 }
 </style>
