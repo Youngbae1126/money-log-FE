@@ -11,6 +11,5 @@ import TheFooter from '../components/Footer.vue'
 </template>
 
 <style scoped>
-.Layout {
-}
+
 </style>
