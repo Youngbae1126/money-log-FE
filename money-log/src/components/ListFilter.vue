@@ -1,3 +1,50 @@
+<script setup>
+import { onMounted, ref } from 'vue'
+import { useTransactionStore } from '@/stores/transactionStore'
+
+const transactionStore = useTransactionStore()
+
+const props = defineProps({
+  currentMonth: String,
+  selectedMonth: String,
+})
+
+const selectedMonth = props.selectedMonth
+const selectedCategory = ref('')
+const type = ref('')
+const isIncomeClick = ref(false)
+const isExpenseClick = ref(false)
+
+function onClickIncome(month) {
+  isIncomeClick.value = !isIncomeClick.value
+  console.log('isIncomeClick:', isIncomeClick)
+  console.log('select month:', month)
+  if (isIncomeClick.value) {
+    type.value = '수입'
+    transactionStore.filterMonthIncome(month)
+  } else {
+    type.value = '전체'
+    transactionStore.getTransactionInfo(month)
+  }
+}
+function onClickExpense(month) {
+  isExpenseClick.value = !isExpenseClick.value
+  console.log('isExpenseClick:', isExpenseClick)
+  console.log('select month:', month)
+  if (isExpenseClick.value) {
+    type.value = '지출'
+    transactionStore.filterMonthExpense(month)
+  } else {
+    type.value = '전체'
+    transactionStore.getTransactionInfo(month)
+  }
+}
+
+onMounted(() => {
+  type.value = false
+})
+</script>
+
 <template>
   <div>
     <!-- 필터 UI -->
@@ -5,7 +52,7 @@
       <!-- 날짜 -->
       <div class="filter-box">
         <span>일자</span>
-        <input type="date" v-model="selectedDate" />
+        <input type="date" v-model="selectedMonth" />
       </div>
 
       <!-- 카테고리 -->
@@ -20,18 +67,17 @@
         </select>
       </div>
 
-      <!-- 수입/지출 -->
       <button
         class="filter-btn"
         :class="{ active: type === '수입' }"
-        @click="type = '수입'"
+        @click="onClickIncome(selectedMonth)"
       >
         수입
       </button>
       <button
         class="filter-btn"
         :class="{ active: type === '지출' }"
-        @click="type = '지출'"
+        @click="onClickExpense(selectedMonth)"
       >
         지출
       </button>
@@ -39,46 +85,12 @@
   </div>
 </template>
 
-<script>
-export default {
-  name: 'CalendarFilter',
-  data() {
-    return {
-      currentMonth: 3,
-      currentYear: 2025,
-      selectedDate: '2025-04-02',
-      selectedCategory: '',
-      type: '',
-      monthNames: [
-        '1월',
-        '2월',
-        '3월',
-        '4월',
-        '5월',
-        '6월',
-        '7월',
-        '8월',
-        '9월',
-        '10월',
-        '11월',
-        '12월',
-      ],
-    }
-  },
-  methods: {
-    prevMonth() {
-      const date = new Date(this.currentYear, this.currentMonth - 1)
-      this.currentMonth = date.getMonth()
-      this.currentYear = date.getFullYear()
-    },
-    nextMonth() {
-      const date = new Date(this.currentYear, this.currentMonth + 1)
-      this.currentMonth = date.getMonth()
-      this.currentYear = date.getFullYear()
-    },
-  },
+<style scoped>
+.ListFilter {
 }
-</script>
+</style>
+
+<script></script>
 
 <style scoped>
 body {

@@ -70,40 +70,51 @@ function isSameDate(a, b) {
 </template>
 
 <style scoped>
+.Calender {
+  background-color: white;
+  border-radius: 3rem;
+  padding: 3em;
+  box-shadow: 0 0 2.5rem var(--gray-200);
+}
+
 ::v-deep(.vc-header .vc-title) {
-  background-color: var(--yellow-100);
+  background-color: white;
   color: var(--main-color);
+  font-size: 1.2rem;
   font-weight: bold;
   padding: 0.5rem 1rem;
   border-radius: 0.5rem;
 }
 ::v-deep(.vc-header button) {
-  background-color: var(--yellow-100);
+  background-color: transparent;
   color: var(--main-color);
 }
 ::v-deep(.vc-nav-header button) {
-  background-color: var(--yellow-100);
+  background-color: transparent;
   color: var(--main-color);
 }
 ::v-deep(.vc-nav-items button) {
-  background-color: var(--yellow-100);
+  background-color: transparent;
   color: var(--brown-500);
+  font-size: 0.7rem;
 }
 ::v-deep(.vc-nav-items .is-active) {
   background-color: var(--brown-500);
+  border-radius: 1rem;
   color: white;
 }
 ::v-deep(.vc-weekdays) {
-  margin: 1.5rem 0;
+  margin: 2rem 0;
 }
 ::v-deep(.vc-weekdays > *) {
-  color: var(--brown-500);
-  font-size: 1.2rem;
+  color: var(--brown-700);
+  font-size: 1rem;
 }
 ::v-deep(.vc-day) {
   text-align: center;
   padding: 0.5rem;
-  font-size: 1.2rem;
+  font-size: 1rem;
+  color: var(--gray-400);
 }
 .custom-day-content {
   margin-top: 0.5rem;
