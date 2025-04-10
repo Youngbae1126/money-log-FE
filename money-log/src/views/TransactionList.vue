@@ -1,42 +1,38 @@
 <script setup>
 import ListFilter from '@/components/ListFilter.vue'
 import { useTransactionStore } from '@/stores/transactionStore'
-import { computed, onMounted, ref } from 'vue'
+import { computed, onMounted, ref, watch } from 'vue'
 
 import { getCategoryIcon } from '@/stores/categoryIcons'
 
 // transactionStore에 있는 데이터 가져오기
 const transactionStore = useTransactionStore()
-const currentMonth = ref('04')
-const currentYear = ref('2025')
-
-function prevMonth() {
-  const date = new Date(
-    Number(currentYear.value),
-    Number(currentMonth.value) - 1 - 1,
-  )
-  currentMonth.value = (date.getMonth() + 1).toString().padStart(2, '0')
-  currentYear.value = date.getFullYear().toString()
-  transactionStore.getTransactionInfo(
-    `${currentYear.value}-${currentMonth.value}`,
-  )
-}
-
-function nextMonth() {
-  console.log('실행')
-  const date = new Date(Number(currentYear.value), Number(currentMonth.value))
-  currentMonth.value = (date.getMonth() + 1).toString().padStart(2, '0')
-  currentYear.value = date.getFullYear().toString()
-  transactionStore.getTransactionInfo(
-    `${currentYear.value}-${currentMonth.value}`,
-  )
-}
+const currentMonth = ref(4)
+const currentYear = ref(2025)
 
 // computed 옵션으로 currentYear나 currentMonth가 바뀌면 자동으로 selectedMonth도 갱신
-// 월별 총 수입 정보 가져오기
 const selectedMonth = computed(
-  () => `${currentYear.value}-${currentMonth.value}`,
+  () =>
+    `${currentYear.value}-${currentMonth.value.toString().padStart(2, '0')}`,
 )
+
+watch(selectedMonth, newVal => {
+  // console.log('newVal:', newVal)
+  transactionStore.getTransactionInfo(newVal)
+})
+
+function prevMonth() {
+  const date = new Date(currentYear.value, currentMonth.value - 2)
+  currentMonth.value = date.getMonth() + 1
+  currentYear.value = date.getFullYear()
+
+  // )
+}
+function nextMonth() {
+  const date = new Date(currentYear.value, currentMonth.value)
+  currentMonth.value = date.getMonth() + 1
+  currentYear.value = date.getFullYear()
+}
 
 // 해당 월의 총 수입 계산
 const selectedMonthIncome = computed(() =>
@@ -77,7 +73,12 @@ onMounted(() => {
         <div class="year">{{ currentYear }}</div>
         <div class="description">이번 달에는 이렇게 썼어요!</div>
       </div>
-      <ListFilter :currentMonth="currentMonth" :selectedMonth="selectedMonth" />
+      <ListFilter
+        :currentYear="currentYear"
+        :currentMonth="currentMonth"
+        :selectedMonth="selectedMonth"
+        :reset="reset"
+      />
     </div>
 
     <!-- 리스트 -->
