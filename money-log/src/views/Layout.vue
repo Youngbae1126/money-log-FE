@@ -1,11 +1,15 @@
 <!-- eslint-disable vue/multi-word-component-names -->
-<script setup></script>
+<script setup>
+import TheHeader from '../components/Header.vue'
+import TheFooter from '../components/Footer.vue'
+</script>
 
 <template>
-  <div class="Layout"></div>
+  <TheHeader />
+  <RouterView />
+  <TheFooter />
 </template>
 
 <style scoped>
-.Layout {
-}
+
 </style>
