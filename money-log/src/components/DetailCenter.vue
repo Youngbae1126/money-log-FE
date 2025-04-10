@@ -111,9 +111,40 @@ defineProps({
   font-size: 13px;
   font-weight: 500;
   cursor: pointer;
+  transition: all 0.3s ease;
 }
 
 .detail-center__btn:hover {
   background: var(--gray-100);
+}
+
+.detail-center__edit {
+  background-color: #ffc107;
+  color: white;
+  border: none;
+}
+
+.detail-center__edit:hover {
+  background-color: #ffb300;
+}
+
+.detail-center__delete {
+  background-color: #dc3545;
+  color: white;
+  border: none;
+}
+
+.detail-center__delete:hover {
+  background-color: #c82333;
+}
+
+.detail-center__close {
+  background-color: #6c757d;
+  color: white;
+  border: none;
+}
+
+.detail-center__close:hover {
+  background-color: #5a6268;
 }
 </style>
