@@ -37,6 +37,7 @@ header {
   /* padding: 0.8rem; */
   background-color: transparent;
   margin: 0;
+  z-index: 1000;
 }
 .header {
   max-width: 1920px;

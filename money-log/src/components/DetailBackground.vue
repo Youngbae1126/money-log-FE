@@ -1,18 +1,28 @@
 <!-- 상세페이지 배경 컴포넌트 -->
 <template>
+  <div class="detail-background-layer"></div>
   <!-- 전체 배경 컴포넌트 컨테이너 -->
   <div class="detail-background">
     <!-- 상단 텍스트 영역 (설명 + 금액) -->
     <div class="detail-background__top">
       <div class="detail-background__desc">
-        해당 거래 내역의 상세 페이지예요
+        {{ transactionData.date }} 날짜의 거래 내역 상세 페이지예요
       </div>
       <div class="detail-background__amount">
         <!-- 금액 강조 -->
         <span class="detail-background__amount-number">
-          {{ amount.toLocaleString() }}
+          {{ Number(transactionData.amount).toLocaleString() }}
         </span>
-        <span class="detail-background__amount-text">원 쓰셨네요!</span>
+        <span
+          class="detail-background__amount-text"
+          v-if="transactionData.type === 'expense'"
+          >원 쓰셨네요!</span
+        >
+        <span
+          class="detail-background__amount-text"
+          v-if="transactionData.type === 'income'"
+          >원 들어왔어요!</span
+        >
       </div>
     </div>
 
@@ -31,18 +41,26 @@
 
 <script setup>
 defineProps({
-  userName: String,
-  amount: Number,
+  // userName: String,
+  // amount: Number,
+  // type: String,
+  // date: String,
+  transactionData: Object,
 })
 </script>
 
 <style scoped>
+.detail-background-layer {
+  position: absolute;
+  top: -85px;
+  left: 0;
+  right: 0;
+  height: 150vh;
+  background: linear-gradient(135deg, #fdfde6 0%, #f4eff6 56%, #f0e8fc 100%);
+  z-index: -1;
+}
+
 .detail-background {
-  background-image: url('@/assets/detail-background-color.svg');
-  background-size: cover;
-  background-repeat: no-repeat;
-  background-position: center;
-  min-height: 100vh;
   padding: 64px 48px;
   position: relative;
 }
@@ -50,6 +68,8 @@ defineProps({
 .detail-background__top {
   display: flex;
   flex-direction: column;
+  margin-top: 4rem;
+  padding-left: 4rem;
 }
 
 .detail-background__desc {
@@ -79,7 +99,7 @@ defineProps({
 }
 
 .transaction-detail__pig {
-  position: absolute;
+  /* position: absolute;
   bottom: 0;
   right: 0;
   width: clamp(180px, 35vw, 400px);
@@ -87,5 +107,10 @@ defineProps({
   z-index: 0;
   pointer-events: none;
   user-select: none;
+  top: 24rem; */
+  position: absolute;
+  top: 24rem;
+  left: 65rem;
+  width: 21rem;
 }
 </style>

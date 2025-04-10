@@ -41,7 +41,7 @@ footer {
   justify-content: center;
   row-gap: 2rem;
   margin: auto;
-  margin-top: 4rem;
+  margin-top: 1rem;
   max-width: 1920px;
   width: calc(100% - 2rem);
   height: 300px;
