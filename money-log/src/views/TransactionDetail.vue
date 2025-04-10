@@ -13,29 +13,42 @@ const user = ref('')
 const amount = ref(0)
 const category = ref('')
 const date = ref('')
-const memo = ref('')
+const content = ref('')
+const type = ref('') // 'income' 또는 'expense'
 
-// 페이지가 마운트될 때 거래 데이터를 API에서 불러 옴
+const transactionData = ref({})
+// 페이지가 마운트될 때 URL에 있는 id의 거래 내역 데이터를 불러 옴
+const API_URL = 'http://localhost:5500/transactions'
 onMounted(async () => {
+  // 스크롤을 맨 위로 이동
+  window.scrollTo(0, 0)
   try {
-    const res = await axios.get(
-      `http://localhost:3001/transactions/${transactionId}`,
-    )
-    const data = res.data
-    amount.value = data.amount
-    category.value = data.category
-    date.value = data.date
-    memo.value = data.content
+    const res = await axios.get(`${API_URL}/${transactionId}`)
+    transactionData.value = res.data
   } catch (error) {
-    console.error('데이터를 불러오는 데 실패했습니다:', error)
+    console.log('데이터 요청 실패: ', error)
   }
 })
 </script>
 
 <template>
   <div class="transaction-detail">
-    <DetailBackground :userName="user" :amount="amount">
-      <DetailCenter :category="category" :date="date" :memo="memo" />
+    <DetailBackground
+      :userName="user"
+      :amount="amount"
+      :type="type"
+      :date="date"
+      :transactionData="transactionData"
+    >
+      <DetailCenter
+        :category="category"
+        :date="date"
+        :content="content"
+        :type="type"
+        :id="Number(transactionId)"
+        :amount="amount"
+        :transactionData="transactionData"
+      />
     </DetailBackground>
   </div>
 </template>
@@ -43,6 +56,6 @@ onMounted(async () => {
 <style scoped>
 .transaction-detail {
   position: relative;
-  overflow: hidden;
+  max-height: 630px;
 }
 </style>

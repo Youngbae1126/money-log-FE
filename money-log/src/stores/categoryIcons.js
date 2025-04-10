@@ -13,6 +13,9 @@ import eduIcon from '@/assets/edu.svg'
 import atmIcon from '@/assets/atm.svg'
 import beautyIcon from '@/assets/beauty.svg'
 import eventIcon from '@/assets/event.svg'
+import defaultIcon from '../assets/profile-icon.svg'
+import { defineStore } from 'pinia'
+import axios from 'axios'
 
 // 카테고리 코드와 아이콘 매핑
 export const categoryIcons = {
@@ -31,6 +34,7 @@ export const categoryIcons = {
   atm: atmIcon,
   beauty: beautyIcon,
   event: eventIcon,
+  default: defaultIcon,
 }
 
 // 카테고리 데이터에 아이콘 정보 추가
@@ -43,5 +47,21 @@ export const addIconsToCategories = categories => {
 
 // 카테고리 코드로 아이콘 가져오기
 export const getCategoryIcon = code => {
-  return categoryIcons[code] || null
+  return categoryIcons[code] || defaultIcon
 }
+
+const API_URL = 'http://localhost:5500/categories'
+export const useCategoryStore = defineStore('categoryStore', {
+  state: () => ({
+    code: 'money',
+    categoryData: [],
+  }),
+  getters: {},
+  actions: {
+    async getCategoryInfo() {
+      const response = await axios.get(API_URL)
+      // console.log(response.data)
+      this.categoryData = response.data
+    },
+  },
+})

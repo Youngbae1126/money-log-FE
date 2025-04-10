@@ -22,15 +22,16 @@ const handleSubmit = async formData => {
     const transactions = response.data
 
     // 2. 새로운 ID 생성 (기존 최대 ID + 1)
-    const maxId = Math.max(...transactions.map(t => t.id), 0)
+    const maxId = Math.max(...transactions.map(t => Number(t.id)), 0)
     const newId = maxId + 1
 
     // 3. 새로운 거래 내역 객체 생성
     const newTransaction = {
-      id: newId,
+      id: Number(newId),
       type: formData.isIncome ? 'income' : 'expense',
       category: formData.category,
-      content: formData.memo,
+      content: formData.content,
+      code: formData.code,
       date: formData.date,
       amount: Number(formData.amount),
     }
