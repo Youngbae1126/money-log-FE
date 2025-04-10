@@ -1,45 +1,48 @@
 <script setup>
-import { ref } from 'vue'
+import { onMounted, ref } from 'vue'
 import { useTransactionStore } from '@/stores/transactionStore'
 
 const transactionStore = useTransactionStore()
 
 const props = defineProps({
   currentMonth: String,
-  selectedDate: String,
+  selectedMonth: String,
 })
 
-function getMonthIncomeList(month) {
-  type.value = '수입'
-  transactionStore.getMonthIncomeTransaction(month)
-}
-
-function onClickIncome() {
-  console.log('실행')
-  transactionStore.filterMonthIncome(props.selectedDate)
-}
-
-// const currentMonth = ref(3)
-// const currentYear = ref(2025)
-const selectedDate = props.selectedDate
+const selectedMonth = props.selectedMonth
 const selectedCategory = ref('')
 const type = ref('')
+const isIncomeClick = ref(false)
+const isExpenseClick = ref(false)
 
-// 월 이름 배열
-const monthNames = [
-  '1월',
-  '2월',
-  '3월',
-  '4월',
-  '5월',
-  '6월',
-  '7월',
-  '8월',
-  '9월',
-  '10월',
-  '11월',
-  '12월',
-]
+function onClickIncome(month) {
+  isIncomeClick.value = !isIncomeClick.value
+  console.log('isIncomeClick:', isIncomeClick)
+  console.log('select month:', month)
+  if (isIncomeClick.value) {
+    type.value = '수입'
+    transactionStore.filterMonthIncome(month)
+  } else {
+    type.value = '전체'
+    transactionStore.getTransactionInfo(month)
+  }
+}
+function onClickExpense(month) {
+  isExpenseClick.value = !isExpenseClick.value
+  console.log('isExpenseClick:', isExpenseClick)
+  console.log('select month:', month)
+  if (isExpenseClick.value) {
+    type.value = '지출'
+    transactionStore.filterMonthExpense(month)
+  } else {
+    type.value = '전체'
+    transactionStore.getTransactionInfo(month)
+  }
+}
+
+onMounted(() => {
+  type.value = false
+})
 </script>
 
 <template>
@@ -49,7 +52,7 @@ const monthNames = [
       <!-- 날짜 -->
       <div class="filter-box">
         <span>일자</span>
-        <input type="date" v-model="selectedDate" />
+        <input type="date" v-model="selectedMonth" />
       </div>
 
       <!-- 카테고리 -->
@@ -64,25 +67,17 @@ const monthNames = [
         </select>
       </div>
 
-      <!-- 수입/지출 -->
-      <!-- <button
-        class="filter-btn"
-        :class="{ active: type === '수입' }"
-        @click="type = '수입'"
-      >
-        수입
-      </button> -->
       <button
         class="filter-btn"
         :class="{ active: type === '수입' }"
-        @click="onClickIncome"
+        @click="onClickIncome(selectedMonth)"
       >
         수입
       </button>
       <button
         class="filter-btn"
         :class="{ active: type === '지출' }"
-        @click="type = '지출'"
+        @click="onClickExpense(selectedMonth)"
       >
         지출
       </button>

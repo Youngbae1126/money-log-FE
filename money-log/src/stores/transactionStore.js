@@ -13,8 +13,9 @@ export const useTransactionStore = defineStore('transactions', {
     // 월별 데이터 개수 계산
     countTransactionData: state => {
       return month => {
-        return state.transactionData.filter(item => item.date.startsWith(month))
-          .length
+        return state.filteredTransactionData.filter(item =>
+          item.date.startsWith(month),
+        ).length
       }
     },
     // 수입 계산
@@ -92,25 +93,8 @@ export const useTransactionStore = defineStore('transactions', {
         throw err
       }
     },
-    async getMonthIncomeTransaction(month) {
-      console.log('실행')
-      try {
-        const res = await axios.get(API_URL)
-        this.transactionData = res.data.filter(item =>
-          item.date.startsWith(month),
-        )
-      } catch (error) {
-        console.log(error)
-      }
-    },
-    // async filterMonth(month) {
-    //   this.filteredTransactionData = this.transactionData.filter(item =>
-    //     item.date.startsWith(month),
-    //   )
-    // },
     // 선택된 월의 수입만 필터링
     filterMonthIncome(month) {
-      console.log('오')
       this.filteredTransactionData = this.transactionData.filter(
         item => item.type === 'income' && item.date.startsWith(month),
       )
