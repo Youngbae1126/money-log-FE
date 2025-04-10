@@ -316,9 +316,34 @@ onMounted(() => {
   font-weight: 800;
 }
 
-.transaction-list__title span:nth-child(3) {
-  padding-right: 2rem;
+.transaction-list__title {
+  display: flex;
+  width: 100%;
+  padding: 2rem;
+  justify-content: space-between;
+  align-items: center;
+  color: black;
+  font-size: 1.2rem;
+  font-weight: 800;
 }
+
+.transaction-list__title span:nth-child(1) {
+  /* text-align: center; */
+  padding-left: 7rem;
+  width: 50%;
+}
+
+.transaction-list__title span:nth-child(2) {
+  /* text-align: center; */
+  padding-left: 3rem;
+  width: 32%;
+}
+
+.transaction-list__title span:nth-child(3) {
+  text-align: center;
+  flex-grow: 1;
+}
+
 .list__line {
   margin-top: 1rem;
   border-bottom: 1px solid var(--gray-300);
