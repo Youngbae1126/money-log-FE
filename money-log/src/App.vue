@@ -30,7 +30,8 @@ const handleSubmit = async formData => {
       id: Number(newId),
       type: formData.isIncome ? 'income' : 'expense',
       category: formData.category,
-      content: formData.memo,
+      content: formData.content,
+      code: formData.code,
       date: formData.date,
       amount: Number(formData.amount),
     }

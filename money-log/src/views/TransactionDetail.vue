@@ -48,6 +48,8 @@ onMounted(async () => {
         :date="date"
         :content="content"
         :type="type"
+        :id="Number(transactionId)"
+        :amount="amount"
       />
     </DetailBackground>
   </div>
