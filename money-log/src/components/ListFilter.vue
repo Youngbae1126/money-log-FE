@@ -81,10 +81,10 @@ onMounted(() => {
     <!-- 필터 UI -->
     <div class="filter-container">
       <!-- 날짜 -->
-      <div class="filter-box">
+      <!-- <div class="filter-box">
         <span>일자</span>
         <input type="date" v-model="selectedMonth" />
-      </div>
+      </div> -->
 
       <!-- 카테고리 -->
       <div class="filter-box">

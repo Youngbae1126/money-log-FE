@@ -24,16 +24,11 @@ import MostSpent from '@/components/MostSpent.vue'
   display: flex;
   flex-wrap: wrap;
   gap: 5rem;
-  /* width: calc(100% - 2rem); */
   max-width: 1920px;
-  /* margin: 2rem auto; */
-  /* margin-right: 2rem; */
   padding: 1rem 2rem;
   box-sizing: border-box;
-  /* justify-content: space-between; */
 }
 .dashboard__left-container {
-  /* flex-grow: 0.1; */
   flex: 0 0 20%;
   display: flex;
   flex-direction: column;
@@ -41,7 +36,6 @@ import MostSpent from '@/components/MostSpent.vue'
   margin-left: 1rem;
 }
 .dashboard__right-container {
-  /* flex-grow: 0.9; */
   flex: 0 0 70%;
   display: flex;
   flex-direction: column;

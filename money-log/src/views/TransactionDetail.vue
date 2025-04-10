@@ -22,23 +22,6 @@ const API_URL = 'http://localhost:5500/transactions'
 onMounted(async () => {
   // 스크롤을 맨 위로 이동
   window.scrollTo(0, 0)
-  // try {
-  //   // 모든 거래 내역을 가져온 후 해당 ID의 거래를 찾음
-  //   const res = await axios.get('http://localhost:5500/transactions')
-  //   const transactions = res.data
-  //   const data = transactions.find(t => t.id === Number(transactionId))
-
-  //   if (!data) {
-  //     throw new Error('해당 거래 내역을 찾을 수 없습니다.')
-  //   }
-  //   amount.value = data.amount
-  //   category.value = data.category
-  //   date.value = data.date
-  //   content.value = data.content
-  //   type.value = data.type // type 데이터 추가
-  // } catch (error) {
-  //   console.error('데이터를 불러오는 데 실패했습니다:', error)
-  // }
   try {
     const res = await axios.get(`${API_URL}/${transactionId}`)
     transactionData.value = res.data

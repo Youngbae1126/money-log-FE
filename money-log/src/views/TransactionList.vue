@@ -1,10 +1,14 @@
 <script setup>
 import ListFilter from '@/components/ListFilter.vue'
+import { useRoute } from 'vue-router'
 import { useTransactionStore } from '@/stores/transactionStore'
 import { computed, onMounted, ref, watch } from 'vue'
 
 import { getCategoryIcon } from '@/stores/categoryIcons'
 
+const route = useRoute()
+const dashboardMonth = route.params.month
+const dashboardYear = route.params.year
 // transactionStore에 있는 데이터 가져오기
 const transactionStore = useTransactionStore()
 const currentMonth = ref(4)
@@ -47,14 +51,10 @@ onMounted(() => {
   // 스크롤을 맨 위로 이동
   window.scrollTo(0, 0)
 
-  const currMonth = new Date()
-  currentMonth.value =
-    currMonth.getMonth() < 10
-      ? `0${currMonth.getMonth() + 1}`
-      : `${currMonth.getMonth() + 1}`
-
-  const targetDate = `${currentYear.value}-${currentMonth.value}`
-  transactionStore.getTransactionInfo(targetDate)
+  // 대시보드 달력에서 선택된 날짜의 리스트로 이동
+  currentMonth.value = dashboardMonth
+  currentYear.value = dashboardYear
+  transactionStore.getTransactionInfo(`${dashboardYear}-0${dashboardMonth}`)
 })
 </script>
 
