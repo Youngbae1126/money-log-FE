@@ -1,8 +1,17 @@
 <!-- 상세페이지 흰색 카드 컴포넌트 -->
 <template>
   <div class="detail-center">
-    <!-- 닫기 버튼 (뒤로가기 기능) -->
-    <button class="detail-center__close" @click="$router.back()">닫기</button>
+    <!-- 버튼 그룹 -->
+    <div class="detail-center__button-group">
+      <button class="detail-center__btn detail-center__edit">수정</button>
+      <button class="detail-center__btn detail-center__delete">삭제</button>
+      <button
+        class="detail-center__btn detail-center__close"
+        @click="$router.back()"
+      >
+        닫기
+      </button>
+    </div>
 
     <!-- 카테고리 표시 -->
     <div class="detail-center__item">
@@ -11,7 +20,8 @@
         class="detail-center__highlight detail-center__highlight--category"
         >{{ category }}</span
       >
-      카테고리에 소비하셨어요
+      <template v-if="type === 'income'"> 카테고리로 들어온 돈이에요 </template>
+      <template v-else> 카테고리에 소비하셨어요 </template>
     </div>
 
     <!-- 날짜 표시 -->
@@ -20,16 +30,17 @@
       <span class="detail-center__highlight detail-center__highlight--date">{{
         date
       }}</span>
-      에 사용하셨어요
+      <template v-if="type === 'income'"> 에 들어온 돈이에요 </template>
+      <template v-else> 에 사용하셨어요 </template>
     </div>
 
     <!-- 메모 표시 -->
     <div class="detail-center__item">
       📢
-      <span class="detail-center__highlight detail-center__highlight--memo">{{
-        memo
-      }}</span>
-      이라는 메모를 남기셨네요
+      <span class="detail-center__highlight detail-center__highlight--content"
+        >"{{ content }}"</span
+      >
+      메모를 남기셨어요
     </div>
   </div>
 </template>
@@ -39,7 +50,8 @@
 defineProps({
   category: String,
   date: String,
-  memo: String,
+  content: String,
+  type: String, // 'income' 또는 'expense'
 })
 </script>
 
@@ -82,14 +94,19 @@ defineProps({
 .detail-center__highlight--date {
   color: var(--blue);
 }
-.detail-center__highlight--memo {
+.detail-center__highlight--content {
   color: var(--green-500);
 }
 
-.detail-center__close {
+.detail-center__button-group {
   position: absolute;
   top: 24px;
   right: 24px;
+  display: flex;
+  gap: 10px;
+}
+
+.detail-center__btn {
   background: white;
   border: 1px solid var(--gray-300);
   border-radius: 8px;
@@ -97,5 +114,39 @@ defineProps({
   font-size: 13px;
   font-weight: 500;
   cursor: pointer;
+}
+
+.detail-center__btn:hover {
+  background: var(--gray-100);
+}
+
+.detail-center__edit {
+  background-color: #ffc107;
+  color: white;
+  border: none;
+}
+
+.detail-center__edit:hover {
+  background-color: #ffb300;
+}
+
+.detail-center__delete {
+  background-color: #dc3545;
+  color: white;
+  border: none;
+}
+
+.detail-center__delete:hover {
+  background-color: #c82333;
+}
+
+.detail-center__close {
+  background-color: #6c757d;
+  color: white;
+  border: none;
+}
+
+.detail-center__close:hover {
+  background-color: #5a6268;
 }
 </style>

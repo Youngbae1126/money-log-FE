@@ -22,7 +22,7 @@ const routes = [
         component: TransactionList,
       },
       {
-        path: '/detail',
+        path: '/detail/:id',
         name: 'transaction-detail',
         component: TransactionDetail,
       },
