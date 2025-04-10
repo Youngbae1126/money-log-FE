@@ -19,12 +19,15 @@ const content = ref('')
 onMounted(async () => {
   // 스크롤을 맨 위로 이동
   window.scrollTo(0, 0)
-
   try {
-    const res = await axios.get(
-      `http://localhost:5500/transactions/${transactionId}`,
-    )
-    const data = res.data
+    // 모든 거래 내역을 가져온 후 해당 ID의 거래를 찾음
+    const res = await axios.get('http://localhost:5500/transactions')
+    const transactions = res.data
+    const data = transactions.find(t => t.id === Number(transactionId))
+
+    if (!data) {
+      throw new Error('해당 거래 내역을 찾을 수 없습니다.')
+    }
     amount.value = data.amount
     category.value = data.category
     date.value = data.date
@@ -38,7 +41,7 @@ onMounted(async () => {
 <template>
   <div class="transaction-detail">
     <DetailBackground :userName="user" :amount="amount">
-      <DetailCenter :category="category" :date="date" :memo="memo" />
+      <DetailCenter :category="category" :date="date" :content="content" />
     </DetailBackground>
   </div>
 </template>

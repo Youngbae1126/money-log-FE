@@ -92,7 +92,7 @@ defineProps({
 .detail-center__highlight--date {
   color: var(--blue);
 }
-.detail-center__highlight--memo {
+.detail-center__highlight--content {
   color: var(--green-500);
 }
 
