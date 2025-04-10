@@ -48,6 +48,9 @@ const selectedMonthExpense = computed(() =>
 )
 
 onMounted(() => {
+  // 스크롤을 맨 위로 이동
+  window.scrollTo(0, 0)
+
   const currMonth = new Date()
   currentMonth.value =
     currMonth.getMonth() < 10
@@ -112,23 +115,33 @@ onMounted(() => {
           </li>
           <li class="list__line"></li>
           <!-- 여기 아래 부분 v-for문 돌리면 됩니다.-->
-          <RouterLink to="/detail">
-            <li
-              v-for="list in transactionStore.filteredTransactionData"
-              :key="list.id"
-              class="list-content"
-            >
+          <li
+            v-for="list in transactionStore.filteredTransactionData"
+            :key="list.id"
+            class="list-content"
+          >
+            <RouterLink :to="`/detail/${list.id}`" class="list-link">
               <div class="list-content__ctg">
                 <img :src="getCategoryIcon(list.code)" alt="아이콘" />
                 <div class="list-content__text">
-                  <p>{{ list.amount.toLocaleString() }}원</p>
-                  <p>{{ list.content }}</p>
+                  <!-- 수입인지 지출인지 판단하여 색상 변경, +, - 붙여줌 -->
+                  <p
+                    :class="
+                      list.type === 'income'
+                        ? 'income-amount'
+                        : 'expense-amount'
+                    "
+                  >
+                    {{ list.type === 'income' ? '+' : '-' }}
+                    {{ list.amount.toLocaleString() }}원
+                  </p>
+                  <p>{{ list.category }}</p>
                 </div>
               </div>
               <div class="list-content__date">{{ list.date }}</div>
               <div class="list-content__memo">{{ list.content }}</div>
-            </li>
-          </RouterLink>
+            </RouterLink>
+          </li>
         </ul>
       </div>
     </div>
@@ -365,5 +378,25 @@ onMounted(() => {
   display: flex;
   align-items: center;
   flex-grow: 1;
+}
+.list-link {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  text-decoration: none;
+  color: inherit;
+  width: 100%;
+}
+.income-amount {
+  color: var(--blue);
+}
+
+.expense-amount {
+  color: var(--point-color);
+}
+.list-content__text {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
 }
 </style>
