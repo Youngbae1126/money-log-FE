@@ -143,7 +143,7 @@ onMounted(() => {
 .transaction__bg {
   background-color: var(--yellow-200);
   height: 400px;
-  top: -106px;
+  top: -125px;
   position: relative;
   z-index: -100;
 }
@@ -302,6 +302,7 @@ onMounted(() => {
   font-size: 1.2rem;
   font-weight: 800;
 }
+
 .transaction-list__title span:nth-child(3) {
   padding-right: 2rem;
 }
