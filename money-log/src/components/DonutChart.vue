@@ -7,35 +7,45 @@ import { useTransactionStore } from '@/stores/transactionStore'
 
 ChartJS.register(ArcElement, Tooltip, Legend)
 
-// Pinia store 사용
+// Pinia store
 const goalStore = useGoalStore()
 const transactionStore = useTransactionStore()
 
-// 목표 대비 소비 퍼센트
-const percentage = computed(() => {
-  if (!goalStore.targetExpense) return 0
-  return Math.min(
-    Math.round((transactionStore.totalExpense / goalStore.targetExpense) * 100),
-    100,
-  )
+// 현재 월 (예: '2025-04')
+const currentMonth = new Date().toISOString().slice(0, 7)
+
+// 해당 월 소비 금액만 계산
+const currentMonthExpense = computed(() => {
+  return transactionStore.monthTotalExpense(currentMonth)
 })
 
-// 차트 데이터
-const chartData = computed(() => ({
-  labels: ['소비', '남은 금액'],
-  datasets: [
-    {
-      data: [
-        transactionStore.totalExpense,
-        goalStore.targetExpense - transactionStore.totalExpense,
-      ],
-      backgroundColor: ['#facc15', '#d4d4d4'],
-      borderWidth: 0,
-    },
-  ],
-}))
+// 목표 대비 소비 퍼센트
+const percentage = computed(() => {
+  const goal = goalStore.targetExpense
+  const spend = currentMonthExpense.value
+  if (!goal || goal <= 0) return 0
+  return Math.min(Math.round((spend / goal) * 100), 100)
+})
 
-// 차트 옵션
+// 도넛 차트 데이터
+const chartData = computed(() => {
+  const goal = goalStore.targetExpense
+  const spend = currentMonthExpense.value
+  const remain = Math.max(goal - spend, 0) // 0 이상만 허용
+
+  return {
+    labels: ['소비', '남은 금액'],
+    datasets: [
+      {
+        data: [spend, remain],
+        backgroundColor: ['#facc15', '#d4d4d4'],
+        borderWidth: 0,
+      },
+    ],
+  }
+})
+
+// 도넛 차트 옵션
 const chartOptions = {
   cutout: '70%',
   plugins: {
