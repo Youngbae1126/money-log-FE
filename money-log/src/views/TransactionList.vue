@@ -124,8 +124,18 @@ onMounted(() => {
               <div class="list-content__ctg">
                 <img :src="getCategoryIcon(list.code)" alt="아이콘" />
                 <div class="list-content__text">
-                  <p>{{ list.amount.toLocaleString() }}원</p>
-                  <p>{{ list.content }}</p>
+                  <!-- 수입인지 지출인지 판단하여 색상 변경, +, - 붙여줌 -->
+                  <p
+                    :class="
+                      list.type === 'income'
+                        ? 'income-amount'
+                        : 'expense-amount'
+                    "
+                  >
+                    {{ list.type === 'income' ? '+' : '-' }}
+                    {{ list.amount.toLocaleString() }}원
+                  </p>
+                  <p>{{ list.category }}</p>
                 </div>
               </div>
               <div class="list-content__date">{{ list.date }}</div>
@@ -351,5 +361,17 @@ onMounted(() => {
   text-decoration: none;
   color: inherit;
   width: 100%;
+}
+.income-amount {
+  color: var(--blue);
+}
+
+.expense-amount {
+  color: var(--point-color);
+}
+.list-content__text {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
 }
 </style>
