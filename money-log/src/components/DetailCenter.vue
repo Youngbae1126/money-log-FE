@@ -28,9 +28,11 @@
       🍔
       <span
         class="detail-center__highlight detail-center__highlight--category"
-        >{{ category }}</span
+        >{{ transactionData.category }}</span
       >
-      <div v-if="type === 'income'">카테고리로 들어온 돈이에요</div>
+      <div v-if="transactionData.type === 'income'">
+        카테고리로 들어온 돈이에요
+      </div>
       <div v-else>카테고리에 소비하셨어요</div>
     </div>
 
@@ -38,9 +40,9 @@
     <div class="detail-center__item">
       📅
       <span class="detail-center__highlight detail-center__highlight--date">{{
-        date
+        transactionData.date
       }}</span>
-      <div v-if="type === 'income'">에 들어온 돈이에요</div>
+      <div v-if="transactionData.type === 'income'">에 들어온 돈이에요</div>
       <div v-else>에 사용하셨어요</div>
     </div>
 
@@ -48,7 +50,7 @@
     <div class="detail-center__item">
       📢
       <span class="detail-center__highlight detail-center__highlight--content"
-        >"{{ content }}"</span
+        >"{{ transactionData.content }}"</span
       >
       메모를 남기셨어요
     </div>
@@ -86,14 +88,14 @@ const props = defineProps({
 const isEditModalOpen = ref(false) // 모달 열림 상태
 
 // 모달에 전달할 초기 데이터 객체 생성
-const transactionData = computed(() => ({
-  id: props.id,
-  amount: props.amount,
-  date: props.date,
-  content: props.content,
-  category: props.category,
-  type: props.type,
-}))
+// const transactionData = computed(() => ({
+//   id: props.id,
+//   amount: props.amount,
+//   date: props.date,
+//   content: props.content,
+//   category: props.category,
+//   type: props.type,
+// }))
 
 const openEditModal = () => {
   isEditModalOpen.value = true

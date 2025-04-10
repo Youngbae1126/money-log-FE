@@ -169,13 +169,13 @@
       "amount": 70000
     },
     {
-      "id": "16",
+      "amount": 30000,
+      "date": "2025-04-10",
+      "content": "엄마랑 맛있는 밥 먹음!",
+      "category": "식비",
+      "code": "eat",
       "type": "expense",
-      "category": "보험-세금",
-      "code": "tax",
-      "content": "카페",
-      "date": "2025-04-03",
-      "amount": 47686
+      "id": "16"
     },
     {
       "id": "17",
