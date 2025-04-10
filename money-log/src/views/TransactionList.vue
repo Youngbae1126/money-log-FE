@@ -1,42 +1,38 @@
 <script setup>
 import ListFilter from '@/components/ListFilter.vue'
 import { useTransactionStore } from '@/stores/transactionStore'
-import { computed, onMounted, ref } from 'vue'
+import { computed, onMounted, ref, watch } from 'vue'
 
 import { getCategoryIcon } from '@/stores/categoryIcons'
 
 // transactionStore에 있는 데이터 가져오기
 const transactionStore = useTransactionStore()
-const currentMonth = ref('04')
-const currentYear = ref('2025')
-
-function prevMonth() {
-  const date = new Date(
-    Number(currentYear.value),
-    Number(currentMonth.value) - 1 - 1,
-  )
-  currentMonth.value = (date.getMonth() + 1).toString().padStart(2, '0')
-  currentYear.value = date.getFullYear().toString()
-  transactionStore.getTransactionInfo(
-    `${currentYear.value}-${currentMonth.value}`,
-  )
-}
-
-function nextMonth() {
-  console.log('실행')
-  const date = new Date(Number(currentYear.value), Number(currentMonth.value))
-  currentMonth.value = (date.getMonth() + 1).toString().padStart(2, '0')
-  currentYear.value = date.getFullYear().toString()
-  transactionStore.getTransactionInfo(
-    `${currentYear.value}-${currentMonth.value}`,
-  )
-}
+const currentMonth = ref(4)
+const currentYear = ref(2025)
 
 // computed 옵션으로 currentYear나 currentMonth가 바뀌면 자동으로 selectedMonth도 갱신
-// 월별 총 수입 정보 가져오기
 const selectedMonth = computed(
-  () => `${currentYear.value}-${currentMonth.value}`,
+  () =>
+    `${currentYear.value}-${currentMonth.value.toString().padStart(2, '0')}`,
 )
+
+watch(selectedMonth, newVal => {
+  // console.log('newVal:', newVal)
+  transactionStore.getTransactionInfo(newVal)
+})
+
+function prevMonth() {
+  const date = new Date(currentYear.value, currentMonth.value - 2)
+  currentMonth.value = date.getMonth() + 1
+  currentYear.value = date.getFullYear()
+
+  // )
+}
+function nextMonth() {
+  const date = new Date(currentYear.value, currentMonth.value)
+  currentMonth.value = date.getMonth() + 1
+  currentYear.value = date.getFullYear()
+}
 
 // 해당 월의 총 수입 계산
 const selectedMonthIncome = computed(() =>
@@ -80,7 +76,12 @@ onMounted(() => {
         <div class="year">{{ currentYear }}</div>
         <div class="description">이번 달에는 이렇게 썼어요!</div>
       </div>
-      <ListFilter :currentMonth="currentMonth" :selectedMonth="selectedMonth" />
+      <ListFilter
+        :currentYear="currentYear"
+        :currentMonth="currentMonth"
+        :selectedMonth="selectedMonth"
+        :reset="reset"
+      />
     </div>
 
     <!-- 리스트 -->
@@ -177,15 +178,18 @@ onMounted(() => {
 .month-box {
   text-align: center;
   margin-top: 10px;
+  position: relative;
+  top: -90px;
 }
 
 .month-box .nav {
-  font-size: 32px;
+  font-size: 3rem;
   font-weight: bold;
   display: flex;
   justify-content: center;
   align-items: center;
   gap: 20px;
+  margin-bottom: 2rem;
 }
 
 .month-box .nav span {
@@ -195,6 +199,7 @@ onMounted(() => {
 .month-box .year {
   font-size: 18px;
   margin-top: 8px;
+  font-weight: 800;
   color: #444;
 }
 
@@ -202,60 +207,7 @@ onMounted(() => {
   margin-top: 10px;
   font-size: 14px;
   color: #333;
-}
-
-.filter-container {
-  background: #fff8e6;
-  padding: 20px;
-  margin: 30px auto;
-  border-radius: 20px;
-  max-width: 900px;
-  display: flex;
-  justify-content: center;
-  gap: 12px;
-  flex-wrap: wrap;
-}
-
-.filter-box {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  background-color: white;
-  padding: 10px 16px;
-  border-radius: 12px;
-  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
-  border: 1px solid #ddd;
-  font-size: 16px;
-  font-weight: bold;
-}
-
-.filter-box input[type='date'],
-.filter-box select {
-  border: none;
-  font-family: 'Pretendard';
-  font-size: 16px;
-  background: none;
-  cursor: pointer;
-  font-weight: normal;
-}
-
-.filter-btn {
-  padding: 8px 14px;
-  border-radius: 10px;
-  border: 1px solid #ccc;
-  background-color: white;
-  font-size: 16px;
-  font-weight: bold;
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  cursor: pointer;
-}
-
-.filter-btn.active {
-  background-color: #f4c84c;
-  color: white;
-  border-color: #f4c84c;
+  font-weight: 800;
 }
 
 .transaction-list__container {

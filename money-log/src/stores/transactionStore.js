@@ -10,7 +10,7 @@ export const useTransactionStore = defineStore('transactions', {
     month: '',
   }),
   getters: {
-    // 월별 데이터 개수 계산
+    // 렌더링 될 데이터 개수 계산
     countTransactionData: state => {
       return month => {
         return state.filteredTransactionData.filter(item =>
@@ -18,13 +18,11 @@ export const useTransactionStore = defineStore('transactions', {
         ).length
       }
     },
-    // 수입 계산
+    // 전체 수입 계산
     totalIncome(state) {
       let filterData = state.transactionData.filter(
         item => item.type === 'income',
       )
-      // reduce 함수 : 배열에서 값들을 누적해서 하나의 결과값으로 만들 때 사용하는 고급 배열 메서드
-      // array.reduce((누적값, 현재값) => {  // 로직  return 새로운 누적값}, 초기값)
       return filterData.reduce((total, item) => total + item.amount, 0)
     },
     // 월별 수입 계산
@@ -59,7 +57,7 @@ export const useTransactionStore = defineStore('transactions', {
         return total
       }
     },
-    // 수입 - 지출 계산
+    // 수입 - 지출 (차액) 계산
     remainAmount(state) {
       return (
         state.transactionData
@@ -69,12 +67,6 @@ export const useTransactionStore = defineStore('transactions', {
           .filter(item => item.type === 'expense')
           .reduce((sum, item) => sum + item.amount, 0)
       )
-    },
-    // 특정 월('YYYY-MM')에 해당하는 거래 내역 필터링
-    monthFilterList(state) {
-      return month => {
-        return state.transactionData.filter(item => item.date.startsWith(month))
-      }
     },
   },
   actions: {
@@ -105,10 +97,12 @@ export const useTransactionStore = defineStore('transactions', {
         item => item.type === 'expense' && item.date.startsWith(month),
       )
     },
-    // 월 전체 데이터
-    filterMonthAll(month) {
-      this.filteredTransactionData = this.transactionData.filter(item =>
-        item.date.startsWith(month),
+    // 선택된 월의 카테고리별 필터링
+    filterCategoryList(month, code) {
+      console.log('카테고리 실행!')
+      console.log(code)
+      this.filteredTransactionData = this.transactionData.filter(
+        item => item.date.startsWith(month) && item.code === code,
       )
     },
   },

@@ -14,6 +14,8 @@ import atmIcon from '@/assets/atm.svg'
 import beautyIcon from '@/assets/beauty.svg'
 import eventIcon from '@/assets/event.svg'
 import defaultIcon from '../assets/profile-icon.svg'
+import { defineStore } from 'pinia'
+import axios from 'axios'
 
 // 카테고리 코드와 아이콘 매핑
 export const categoryIcons = {
@@ -47,3 +49,19 @@ export const addIconsToCategories = categories => {
 export const getCategoryIcon = code => {
   return categoryIcons[code] || defaultIcon
 }
+
+const API_URL = 'http://localhost:5500/categories'
+export const useCategoryStore = defineStore('categoryStore', {
+  state: () => ({
+    code: 'money',
+    categoryData: [],
+  }),
+  getters: {},
+  actions: {
+    async getCategoryInfo() {
+      const response = await axios.get(API_URL)
+      // console.log(response.data)
+      this.categoryData = response.data
+    },
+  },
+})

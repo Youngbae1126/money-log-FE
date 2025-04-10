@@ -577,6 +577,7 @@
       "id": 61,
       "type": "income",
       "category": "용돈",
+      "code": "money",
       "content": "드디어 알바비 입금!!!",
       "date": "2025-04-15",
       "amount": 1000000
