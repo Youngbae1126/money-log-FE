@@ -3,11 +3,15 @@
   <div class="detail-center">
     <!-- 버튼 그룹 -->
     <div class="detail-center__button-group">
-      <button class="detail-center__btn detail-center__edit">수정</button>
-
+      <button
+        class="detail-center__btn detail-center__edit"
+        @click="openEditModal"
+      >
+        수정
+      </button>
       <button
         class="detail-center__btn detail-center__delete"
-        @click="onClickDelete"
+        @click="deleteTransaction"
       >
         삭제
       </button>
@@ -48,17 +52,110 @@
       >
       메모를 남기셨어요
     </div>
+
+    <!-- 수정 모달 -->
+    <MoneyEditModal
+      :isOpen="isEditModalOpen"
+      :initialData="transactionData"
+      @close="closeEditModal"
+      @submit="handleEditSubmit"
+    />
   </div>
 </template>
 
 <script setup>
+import { ref, computed } from 'vue'
+import { useRouter } from 'vue-router'
+import axios from 'axios' // axios 임포트 추가
+import MoneyEditModal from './MoneyEditModal.vue' // 모달 컴포넌트 임포트
+
+const API_URL = 'http://localhost:5500/transactions'
+const router = useRouter()
+
 // TransactionDetail.vue로부터 전달받는 상세 데이터
-defineProps({
+const props = defineProps({
+  id: Number,
   category: String,
   date: String,
   content: String,
   type: String, // 'income' 또는 'expense'
+  amount: Number, // 금액 prop 추가
+  transactionData: Object,
 })
+
+const isEditModalOpen = ref(false) // 모달 열림 상태
+
+// 모달에 전달할 초기 데이터 객체 생성
+const transactionData = computed(() => ({
+  id: props.id,
+  amount: props.amount,
+  date: props.date,
+  content: props.content,
+  category: props.category,
+  type: props.type,
+}))
+
+const openEditModal = () => {
+  isEditModalOpen.value = true
+}
+
+const closeEditModal = () => {
+  isEditModalOpen.value = false
+}
+
+const handleEditSubmit = async formData => {
+  try {
+    const response = await axios.put(
+      `http://localhost:5500/transactions/${props.id}`,
+      {
+        ...formData, // 모달에서 받은 데이터
+        id: props.id, // ID는 props에서 가져옴
+      },
+    )
+
+    // axios는 성공 시 2xx 상태 코드를 반환합니다.
+    if (response.status >= 200 && response.status < 300) {
+      // console.log('수정 성공')
+      closeEditModal()
+      router.go(0) // 현재 페이지 새로고침
+    } else {
+      // axios는 2xx 외의 상태 코드에서 에러를 발생시키므로, 이 부분은 보통 catch 블록에서 처리됩니다.
+      // 하지만 만약을 위해 남겨둘 수 있습니다.
+      console.error('수정 실패 - 상태 코드:', response.status)
+    }
+  } catch (error) {
+    console.error(
+      '수정 중 오류 발생:',
+      error.response ? error.response.data : error.message,
+    )
+  }
+}
+
+// 해당 거래내역 삭제 함수
+const deleteTransaction = async () => {
+  let isDelete = false
+  if (!props.transactionData.id) {
+    console.error('삭제할 거래의 ID가 없습니다.')
+    return
+  } else {
+    isDelete = confirm('삭제하시겠습니까?')
+    if (isDelete) {
+      try {
+        console.log('hihi:', props.transactionData.id)
+
+        const response = await axios.delete(`${API_URL}/${props.id}`)
+        if (response.status === 200 || response.status === 204) {
+          // 삭제 성공 시 목록 페이지로 이동
+          router.push('/list')
+        } else {
+          console.error('삭제 실패 - 상태 코드:', response.status)
+        }
+      } catch (error) {
+        console.error('삭제 중 오류 발생:', error)
+      }
+    }
+  }
+}
 </script>
 
 <style scoped>

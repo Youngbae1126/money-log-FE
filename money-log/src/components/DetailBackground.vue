@@ -6,17 +6,21 @@
     <!-- 상단 텍스트 영역 (설명 + 금액) -->
     <div class="detail-background__top">
       <div class="detail-background__desc">
-        {{ date }} 날짜의 거래 내역 상세 페이지예요
+        {{ transactionData.date }} 날짜의 거래 내역 상세 페이지예요
       </div>
       <div class="detail-background__amount">
         <!-- 금액 강조 -->
         <span class="detail-background__amount-number">
-          {{ amount.toLocaleString() }}
+          {{ Number(transactionData.amount).toLocaleString() }}
         </span>
-        <span class="detail-background__amount-text" v-if="type === 'expense'"
+        <span
+          class="detail-background__amount-text"
+          v-if="transactionData.type === 'expense'"
           >원 쓰셨네요!</span
         >
-        <span class="detail-background__amount-text" v-if="type === 'income'"
+        <span
+          class="detail-background__amount-text"
+          v-if="transactionData.type === 'income'"
           >원 들어왔어요!</span
         >
       </div>
@@ -37,10 +41,11 @@
 
 <script setup>
 defineProps({
-  userName: String,
-  amount: Number,
-  type: String,
-  date: String,
+  // userName: String,
+  // amount: Number,
+  // type: String,
+  // date: String,
+  transactionData: Object,
 })
 </script>
 

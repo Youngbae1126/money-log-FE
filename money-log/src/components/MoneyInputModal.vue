@@ -39,12 +39,12 @@
         </div>
         <!-- 메모, 카테고리 input 모음 -->
         <div class="input-row">
-          <div class="input-group memo-group">
+          <div class="input-group content-group">
             <label
               >메모 memo
               <input
                 type="text"
-                v-model="memo"
+                v-model="content"
                 placeholder="메모를 입력하세요"
               />
             </label>
@@ -100,7 +100,8 @@ export default {
       amount: '',
       formattedAmount: '',
       date: new Date().toISOString().split('T')[0],
-      memo: '',
+      content: '',
+      code: '',
       category: '',
       isIncome: false,
       categories: [],
@@ -155,7 +156,8 @@ export default {
       this.amount = ''
       this.formattedAmount = ''
       this.date = new Date().toISOString().split('T')[0]
-      this.memo = ''
+      this.content = ''
+      this.code = ''
       this.category = this.categories.length > 0 ? this.categories[0].name : ''
       this.isIncome = false
       this.updateSelectedCategory()
@@ -164,7 +166,8 @@ export default {
       const formData = {
         amount: this.amount,
         date: this.date,
-        memo: this.memo,
+        content: this.content,
+        code: this.code,
         category: this.category,
         isIncome: this.isIncome,
       }
@@ -236,7 +239,7 @@ h2 {
   flex: 1;
 }
 
-.memo-group {
+.content-group {
   flex: 1;
 }
 
