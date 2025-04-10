@@ -14,9 +14,7 @@ import MostSpent from '@/components/MostSpent.vue'
     </div>
     <div class="dashboard__right-container">
       <IEComparing />
-      <RouterLink to="/list">
-        <Calender />
-      </RouterLink>
+      <Calender />
     </div>
   </div>
 </template>
