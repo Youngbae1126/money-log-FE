@@ -15,10 +15,7 @@
       >
         삭제
       </button>
-      <button
-        class="detail-center__btn detail-center__close"
-        @click="$router.back()"
-      >
+      <button class="detail-center__btn detail-center__close" @click="backList">
         닫기
       </button>
     </div>
@@ -133,6 +130,14 @@ const handleEditSubmit = async formData => {
   }
 }
 
+// 닫기 버튼 클릭 시 실행될 함수
+const backList = () => {
+  const date = props.transactionData.date
+  const year = new Date(date).getFullYear()
+  const month = String(new Date(date).getMonth() + 1)
+  router.push(`/list/${year}/${month}`)
+}
+
 // 해당 거래내역 삭제 함수
 const deleteTransaction = async () => {
   let isDelete = false
@@ -143,10 +148,13 @@ const deleteTransaction = async () => {
     isDelete = confirm('삭제하시겠습니까?')
     if (isDelete) {
       try {
+        const date = props.transactionData.date
+        const year = new Date(date).getFullYear()
+        const month = String(new Date(date).getMonth() + 1)
         const response = await axios.delete(`${API_URL}/${props.id}`)
         if (response.status === 200 || response.status === 204) {
           // 삭제 성공 시 목록 페이지로 이동
-          router.push('/list')
+          router.push(`/list/${year}/${month}`)
         } else {
           console.error('삭제 실패 - 상태 코드:', response.status)
         }
