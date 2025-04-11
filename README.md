@@ -66,6 +66,8 @@
 > npm run dev
 ```
 
+<hr style="border: none; height: 1px; background-color: #ddd;" />
+
 #### <span id="Techused">[사용 기술]</span>
 
 <img src="images/HTML5.png" width="20"/> HTML5
