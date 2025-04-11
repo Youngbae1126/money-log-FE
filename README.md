@@ -11,12 +11,13 @@
 1.  [소개 및 개요](#outline)
 2.  [프로젝트 설명](#aboutPjt)
 3.  [팀원 소개 및 역할 분담](#aboutUs)
-4.  [사용 기술](#Techused)
-5.  [핵심 기능](#prmyFunc)
-6.  [화면 설계](#dsgnBrd)
-7.  [프로젝트 구조](#structure)
-8.  [구현 결과](#results)
-9.  [프로젝트 후기](#comment)
+4.  [실행 방법](#HowtoUse)
+5.  [사용 기술](#Techused)
+6.  [핵심 기능](#prmyFunc)
+7.  [화면 설계](#dsgnBrd)
+8.  [프로젝트 구조](#structure)
+9.  [구현 결과](#results)
+10. [프로젝트 후기](#comment)
 
 <hr style="border: none; height: 1px; background-color: #ddd;" />
 
@@ -44,11 +45,26 @@
 - 강경림: 메인 대시보드 전반
 - 문시윤: 상세 페이지 전반
 - 박정열: 모달창, 상세페이지 및 마이페이지 설정 데이터 바인딩
-- 배영현: 캘린더 구현, 전체 페이지 라우팅, 거래내역, 유저, 목표 스토어 상태관리, 거래내역 삭제 구현, 리스트 필터링
+- 배영현: 캘린더 구현, 거래 내역·유저·목표 스토어 상태관리, 거래 내역 삭제 구현, 거래 내역 리스트 필터링
 - 이동진: 거래 내역 조회 페이지 전반
 - 장혜주: 거래 내역 조회 페이지 전반
 
 <hr style="border: none; height: 1px; background-color: #ddd;" />
+
+#### <span id="HowtoUse">[실행 방법]</span>
+- package.json의 패키지들을 설치합니다.
+```
+> npm i
+```
+- json-server를 실행해줍니다.
+> 5500번 포트로 열어주어야 프로젝트를 정상적으로 실행하실 수 있습니다.
+```
+> npm run db
+```
+- 프로젝트를 실행합니다.
+```
+> npm run dev
+```
 
 #### <span id="Techused">[사용 기술]</span>
 
@@ -80,30 +96,36 @@
 #### <span id="dsgnBrd">[화면 설계]</span>
 
 ###### 1. 대시보드 페이지
+> <img style="width: 450px;" alt="대시보드 페이지 이미지" src="images/dashboard.png">
+- 접속한 월에 해당하는 거래 내역을 캘린더로 표시
+- 이번 달 총 수입과 총 지출, 차액 계산하여 상단에 표시
+- 좌측 상단에 이번 달에 가장 많이 지출한 카테고리 TOP 3 표시
+- 좌측 하단에 유저가 설정한 이번 달 목표 금액과 현재 달성률을 도넛 차트로 표시
+
 
 ###### 2. 거래 내역 조회 페이지
-
-- 월 필터링, 카테고리 필터링, 수입/지출 필터링
+> <img style="width: 450px;" alt="거래 내역 조회 페이지 이미지" src="images/transactionList.png">
+- 월별 필터링, 카테고리 필터링, 수입/지출 필터링
 - 이번 달 총 수입과 총 지출 표시
 - 모달 창에서 입력한 내역 표시
 
 ###### 3. 거래 내역 상세 페이지
-
+> <img style="width: 450px;" alt="거래 내역 상세 페이지 이미지" src="images/transactionDetail.png">
 - 해당 소비/지출에 따른 날짜, 금액, 카테고리, 메모 띄움
 
 ###### 4. 마이 페이지
-
+> <img style="width: 450px;" alt="마이 페이지 이미지" src="images/mypage.png">
 - 유저 정보 (닉네임)
 - 이번 달 지출 목표 금액 설정
 - 유저의 머니로그에 따른 소비 분석 리포트
 
-###### 5. 거래내역 입력 모달 창
-
+###### 5. 거래 내역 입력 모달 창
+> <img style="width: 450px;" alt="거래 내역 입력 모달 창 이미지" src="images/inputModal.png">
 - 어떤 페이지에서도 작동 가능
 - 소비/지출한 날짜, 금액, 카테고리, 메모 입력
 
-###### 6. 거래내역 수정 모달 창
-
+###### 6. 거래 내역 수정 모달 창
+> <img style="width: 450px;" alt="거래 내역 수정 모달 창 이미지" src="images/editModal.png">
 - 어떤 페이지에서도 작동 가능
 - 소비/지출한 날짜, 금액, 카테고리, 메모 입력
 
@@ -122,16 +144,16 @@
 - 거래 내역 조회 페이지
   - ListFilter.vue: 상단바 구현, 날짜, 카테고리, 수입, 지출 필터링
 - 거래 내역 상세 페이지
-  - DetailBackground.vue: 상세페이지에서 배경 정보 표시
-  - DetailCenter.vue: 상세페이지의 중앙 정보 영역을 구성
+  - DetailBackground.vue: 상세 페이지에서 배경 정보 표시
+  - DetailCenter.vue: 상세 페이지의 중앙 정보 영역을 구성
 - 마이 페이지
-  - MoneyLog.vue: 입력된 거래내역 리포트를 보여 줌
-- 거래내역 입력 모달창
+  - MoneyLog.vue: 입력된 거래 내역 리포트를 보여 줌
+- 거래 내역 입력 모달창
   - FloatingButton.vue: 사용자가 새 항목을 입력할 수 있게 함
   - MoneyInputModal.vue: 새 거래내역 입력을 위한 모달창 UI
-- 거래내역 수정 모달창
+- 거래 내역 수정 모달창
   - FloatingButton.vue: 사용자가 항목을 수정할 수 있도록 함
-  - MoneyInputModal.vue: 거래내역 수정을 위한 모달창 UI
+  - MoneyInputModal.vue: 거래 내역 수정을 위한 모달창 UI
 
 <br />
 
