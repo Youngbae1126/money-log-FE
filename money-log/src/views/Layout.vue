@@ -10,6 +10,4 @@ import TheFooter from '../components/Footer.vue'
   <TheFooter />
 </template>
 
-<style scoped>
-
-</style>
+<style scoped></style>
