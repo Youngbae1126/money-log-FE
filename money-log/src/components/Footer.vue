@@ -1,5 +1,8 @@
 <!-- eslint-disable vue/multi-word-component-names -->
-<script setup></script>
+<script setup>
+const currentMonth = new Date().getMonth() + 1
+const currentYear = new Date().getFullYear()
+</script>
 
 <template>
   <footer>
@@ -10,7 +13,7 @@
           <RouterLink to="/">
             <li>DashBoard</li>
           </RouterLink>
-          <RouterLink to="/list">
+          <RouterLink :to="`/list/${currentYear}/${currentMonth}`">
             <li>List</li>
           </RouterLink>
           <RouterLink to="/mypage">

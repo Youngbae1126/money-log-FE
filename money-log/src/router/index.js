@@ -17,6 +17,11 @@ const routes = [
         component: DashBoard,
       },
       {
+        path: '/list',
+        name: 'transaction-list',
+        component: TransactionList,
+      },
+      {
         path: '/list/:year/:month',
         name: 'transaction-list',
         component: TransactionList,

@@ -1,7 +1,7 @@
 {
   "user": {
     "id": 1,
-    "nickname": "기타치는 사자",
+    "nickname": "기타치는 고양이",
     "icon": "👨‍💻"
   },
   "log": {
@@ -30,7 +30,7 @@
   "goal": {
     "month": "2025-04",
     "currentExpense": 100000,
-    "targetExpense": 500000
+    "targetExpense": 300000
   },
   "transactions": [
     {
@@ -124,13 +124,13 @@
       "amount": 151769
     },
     {
-      "id": "11",
-      "type": "expense",
-      "category": "경조사",
-      "code": "event",
-      "content": "보험료",
+      "amount": 182885,
       "date": "2025-03-17",
-      "amount": 182885
+      "content": "보험료",
+      "category": "보험-세금",
+      "code": "tax",
+      "type": "expense",
+      "id": "11"
     },
     {
       "id": "12",
